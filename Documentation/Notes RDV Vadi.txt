@@ -1,0 +1,8 @@
+Récolte de données -> définir les fonctionnalités primordiales
+MCD/MLD
+Analyse algorithme pour les dates
+Design de l'application
+Archtiecture système (serveur, base de données)
+
+Voir si possible en local la base de données
+Filmer démo avant la présentation
