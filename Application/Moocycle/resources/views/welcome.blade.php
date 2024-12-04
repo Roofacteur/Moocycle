@@ -10,7 +10,9 @@
 
     </header>
     <main>
-        Bienvenue sur Moocycle
+        <h1>
+            Bienvenue sur Moocycle
+        </h1>
     </main>
     <footer>
 

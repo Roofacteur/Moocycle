@@ -12,7 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('tbl_vache', function (Blueprint $table) {
-            $table->integer('numero')->primary(); // Clé primaire
+            $table->increments('numero')->primary(); // Clé primaire
             $table->string('nom', 50); // Champ VARCHAR(50) non nul
             $table->date('date_prochaine_chaleur')->nullable(); // Champ DATE, nullable
             $table->date('date_insemination')->nullable(); // Champ DATE, nullable
