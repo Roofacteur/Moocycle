@@ -1,0 +1,15 @@
+@font-face {
+    font-family: 'Dolphin-Sans';
+    src: url('/fonts/Monoround.otf'); /* Reference the font directly from the public directory */
+}
+
+.title{
+    font-family: 'Dolphin-Sans';
+    color: rgb(255, 157, 211);
+    font-size: 50px;
+}
+.undertitle{
+    font-family: 'Dolphin-Sans';
+    color: rgb(255, 157, 211);
+    font-size: 25px;
+}

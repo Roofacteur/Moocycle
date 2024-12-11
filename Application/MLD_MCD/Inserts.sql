@@ -1,3 +1,45 @@
 USE bd_moocycle;
-INSERT INTO tbl_vache (nom, date_prochaine_chaleur, date_insemination, date_naissance, nombre_lactation, race)
-VALUES ('Valeriane', '2024-05-25','2024-05-04', '2020-11-29', 2, 'MO');
+INSERT INTO tbl_vaches (nom, date_prochaine_chaleur, date_insemination, date_naissance, nombre_lactation)
+VALUES ('Valeriane', '2024-05-25','2024-05-04', '2020-11-29', 2);
+INSERT INTO tbl_races (nom)
+VALUES ("Holstein"),
+    ("Charolaise"),
+    ("Limousine"),
+    ("Normande"),
+    ("Montbéliarde"),
+    ("Salers"),
+    ("Tarentaise"),
+    ("Aubrac"),
+    ("Brune des Alpes"),
+    ("Vosgienne"),
+    ("Gasconne"),
+    ("Parthenaise"),
+    ("Rouge Flamande"),
+    ("Pie Rouge"),
+    ("Abondance"),
+    ("Simmental"),
+    ("Hereford"),
+    ("Angus"),
+    ("Jersey"),
+    ("Guernesey"),
+    ("Blonde d'Aquitaine"),
+    ("Bleue du Nord"),
+    ("Pie Noire Bretonne"),
+    ("Maine-Anjou"),
+    ("Galloway"),
+    ("Dexter"),
+    ("Highland"),
+    ("Bazadaise"),
+    ("Shorthorn"),
+    ("Devon"),
+    ("Longhorn"),
+    ("Red Poll"),
+    ("Beefmaster"),
+    ("Brahman"),
+    ("Santa Gertrudis"),
+    ("Nelore"),
+    ("Gir"),
+    ("Sahiwal"),
+    ("Tharparkar");
+INSERT INTO tbl_racevache;
+VALUES (1, 5);

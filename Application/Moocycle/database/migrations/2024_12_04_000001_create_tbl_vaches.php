@@ -11,14 +11,13 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('tbl_vache', function (Blueprint $table) {
-            $table->increments('numero')->primary(); // Clé primaire
+        Schema::create('tbl_vaches', function (Blueprint $table) {
+            $table->increments('num_tblVache'); // Clé primaire
             $table->string('nom', 50); // Champ VARCHAR(50) non nul
             $table->date('date_prochaine_chaleur')->nullable(); // Champ DATE, nullable
             $table->date('date_insemination')->nullable(); // Champ DATE, nullable
             $table->date('date_naissance'); // Champ DATE non nul
             $table->integer('nombre_lactation')->nullable(); // Champ INT, nullable
-            $table->string('race', 50); // Champ VARCHAR(50) non nul
         });
     }
 
@@ -27,6 +26,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('tbl_vache');
+        Schema::dropIfExists('tbl_vaches');
     }
 };
