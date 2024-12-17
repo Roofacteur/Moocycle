@@ -15,18 +15,47 @@ body {
     text-align: center;
     background-color: rgb(255, 255, 245);
 }
+/* Conteneur des boutons */
+.mainButtons {
+    display: grid; /* Utilisation de grid pour un contrôle précis */
+    grid-template-columns: repeat(2, 350px); /* Crée deux colonnes de 150px */
+    justify-content: center; /* Centre les éléments horizontalement */
+    align-items: center; /* Centre les éléments verticalement */
+    gap: 20px; /* Ajoute un espacement entre les boutons */
+}
+
+/* Style des boutons */
+.mainButtons button {
+    width: 350px; /* Largeur du bouton */
+    height: 350px; /* Hauteur du bouton (assure la forme carrée) */
+    font-size: 80px; /* Taille du texte dans les boutons */
+    color: rgb(231, 157, 188);
+    background-color: white; /* Couleur de fond des boutons */
+    border: 2px solid rgb(231, 157, 188); /* Bordure autour des boutons */
+    border-radius: 16px; /* Coins arrondis des boutons */
+    cursor: pointer; /* Curseur en forme de main sur les boutons */
+    display: flex;
+    justify-content: center; /* Centre le texte horizontalement */
+    align-items: center; /* Centre le texte verticalement */
+    transition: background-color 0.3s ease; /* Effet de transition lors du survol */
+}
+
+.mainButtons button:hover {
+    background-color: rgb(231, 157, 188); /* Change la couleur de fond au survol */
+    color: white; /* Change la couleur du texte au survol */
+}
 
 /* Styles pour le titre */
 .title {
     font-family: 'Dolphin-Sans';
-    color: rgba(231, 157, 188, 255);
+    color: rgb(231, 157, 188);
     font-size: 40px;
-    margin-bottom: 30px; /* Plus d'espace sous le titre */
+    margin-bottom: 100px; /* Plus d'espace sous le titre */
     margin-top: 30px;
 }
 #clock {
     font-family: 'Dolphin-Sans';
-    color: rgba(231, 157, 188, 255);
+    color: rgb(231, 157, 188);
     font-size: 50px;
     margin: 10px;
     position: absolute; /* Positionnement absolu */
@@ -53,7 +82,14 @@ body {
     margin-top: 100px; /* Ajoute un espace au-dessus du sous-titre */
     margin-bottom: 40px; /* Espacement inférieur */
 }
-
+#options{
+    text-align: left;
+    position: absolute;
+    margin-left: 10px;
+}
+#options img {
+    width: 12%;
+}
 /* Pied de page */
 #footer {
     font-family: 'Dolphin-Sans';

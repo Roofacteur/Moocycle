@@ -18,6 +18,15 @@
         </div>
     </header>
     <main>
+        <div class = "mainButtons">
+            <button id = "button1" class = "mainButtons">BTN1</button>
+            <button id = "button2" class = "mainButtons">BTN2</button>
+            <button id = "button3" class = "mainButtons">BTN3</button>
+            <button id = "button4" class = "mainButtons">BTN4</button>
+        </div>
+        <div id="options">
+            <img src="/assets/wheel.png" alt="">
+        </div>
     </main>
     <footer id="footer">
             <div id="copyright">
