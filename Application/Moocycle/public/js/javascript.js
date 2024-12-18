@@ -1,18 +1,17 @@
 'use strict';
-function startTime() {
+function startDate() {
     const today = new Date();
-    let d = today.getFullYear();
-    let h = today.getHours();
-    let m = today.getMinutes();
-    let s = today.getSeconds();
-    m = checkTime(m);
-    s = checkTime(s);
-    document.getElementById('clock').innerHTML =  h + ":" + m;
-    document.getElementById("currentyear").innerHTML = d;
-    setTimeout(startTime, 1000);
+    let year = today.getFullYear();
+    let month = today.getMonth() + 1; // Les mois commencent à 0
+    let day = today.getDate();
+    month = checkTime(month);
+    day = checkTime(day);
+    document.getElementById('clock').innerHTML = year + "/" + month + "/" + day;
+    document.getElementById('currentyear').innerHTML = year
+    setTimeout(startDate, 1000); // Actualisation toutes les secondes
 }
 function checkTime(i) {
-    if (i < 10) {i = "0" + i};  // add zero in front of numbers < 10
+    if (i < 10) {i = "0" + i};  // Ajouter un zéro devant les chiffres < 10
     return i;
 }
-startTime();
+startDate();

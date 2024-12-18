@@ -41,5 +41,5 @@ VALUES ("Holstein"),
     ("Gir"),
     ("Sahiwal"),
     ("Tharparkar");
-INSERT INTO tbl_racevache;
+INSERT INTO tbl_racevache
 VALUES (1, 5);

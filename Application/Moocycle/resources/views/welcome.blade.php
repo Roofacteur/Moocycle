@@ -19,10 +19,10 @@
     </header>
     <main>
         <div class = "mainButtons">
-            <button id = "button1" class = "mainButtons">BTN1</button>
-            <button id = "button2" class = "mainButtons">BTN2</button>
-            <button id = "button3" class = "mainButtons">BTN3</button>
-            <button id = "button4" class = "mainButtons">BTN4</button>
+            <button id = "buttonCows" class = "mainButtons"><img src="/assets/cowicon.png" alt=""></button>
+            <button id = "buttonCalendar" class = "mainButtons"><img src="/assets/calendaricon.png" alt=""></button>
+            <button id = "buttonHealth" class = "mainButtons"><img src="/assets/crossicon.png" alt=""></button>
+            <button id = "buttonInfo" class = "mainButtons"><img src="/assets/bulbicon.png" alt=""></button>
         </div>
         <div id="options">
             <img src="/assets/wheel.png" alt="">

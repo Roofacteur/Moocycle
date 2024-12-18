@@ -4,7 +4,13 @@ use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
+    return view('layouts.app');
+});
+Route::get('/home', function () {
     return view('welcome');
+});
+Route::get('/cows', function () {
+    return view('layouts.cows');
 });
 
 Route::get('/dashboard', function () {
