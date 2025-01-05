@@ -6,7 +6,7 @@
 <body>
     <header>
         <div class = "title">
-            Mes vaches
+            Santé générale
         </div>
     </header>
     <main>

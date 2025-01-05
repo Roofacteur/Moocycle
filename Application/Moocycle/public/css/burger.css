@@ -1,0 +1,82 @@
+@font-face {
+    font-family: 'Dolphin-Sans';
+    src: url('/fonts/AlteHaasGroteskBold.ttf'); /* Reference the font directly from the public directory */
+}
+/* off-screen-menu */
+.off-screen-menu {
+    font-family: 'Dolphin-Sans';
+    background-color: blueviolet;
+    height: 100vh;
+    width: 100%;
+    max-width: 450px;
+    position: fixed;
+    top: 0;
+    left: -450px; /* Positionne le menu en dehors de l'écran à gauche */
+    font-size: 2.5rem;
+    transition: .3s ease; /* Animation fluide pour l'apparition/disparition */
+}
+.off-screen-menu ul{
+    list-style: none;
+    padding: 0;
+    margin-top: 80px;
+}
+.off-screen-menu li{
+    transition: 0.25s;
+    height: 80px;
+}
+.off-screen-menu li:hover{
+    transition: 0.25s;
+    background-color: rgb(115, 36, 189);
+    cursor: pointer;
+}
+.off-screen-menu a{
+    color: white;
+    text-decoration: none;
+}
+.off-screen-menu.active {
+    left: 0; /* Fait apparaître le menu à gauche */
+}
+
+/* ham menu */
+.ham-menu {
+    height: 60px;
+    width: 50px;
+    position: absolute;
+    top: 10px; /* Ajuste la hauteur depuis le haut */
+    left: 10px; /* Ajuste l'écart par rapport à la gauche */
+    z-index: 10; /* Assure que le menu burger est au-dessus des autres éléments */
+}
+.ham-menu:hover {
+    cursor: pointer;
+}
+.ham-menu span {
+    height: 5px;
+    width: 100%;
+    background-color: blueviolet;
+    border-radius: 25px;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    transition: .3s ease;
+}
+.ham-menu span:nth-child(1) {
+    top: 25%;
+}
+.ham-menu span:nth-child(3) {
+    top: 75%;
+}
+.ham-menu.active span {
+    background-color: white;
+}
+.ham-menu.active span:nth-child(1) {
+    top: 50%;
+    transform: translate(-50%, -50%) rotate(45deg);
+}
+.ham-menu.active span:nth-child(2) {
+    opacity: 0;
+}
+.ham-menu.active span:nth-child(3) {
+    top: 50%;
+    transform: translate(-50%, -50%) rotate(-45deg);
+}

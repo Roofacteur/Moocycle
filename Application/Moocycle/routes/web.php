@@ -12,6 +12,16 @@ Route::get('/home', function () {
 Route::get('/cows', function () {
     return view('layouts.cows');
 });
+Route::get('/calendar', function () {
+    return view('layouts.calendar');
+});
+Route::get('/health', function () {
+    return view('layouts.health');
+});
+Route::get('/tips', function () {
+    return view('layouts.tips');
+});
+
 
 Route::get('/dashboard', function () {
     return view('dashboard');

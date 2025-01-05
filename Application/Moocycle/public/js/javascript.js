@@ -1,4 +1,7 @@
 'use strict';
+const hamMenu = document.querySelector(".ham-menu");
+const offScreenMenu = document.querySelector(".off-screen-menu");
+
 function startDate() {
     const today = new Date();
     let year = today.getFullYear();
@@ -15,3 +18,7 @@ function checkTime(i) {
     return i;
 }
 startDate();
+hamMenu.addEventListener("click", () => {
+  hamMenu.classList.toggle("active");
+  offScreenMenu.classList.toggle("active");
+});

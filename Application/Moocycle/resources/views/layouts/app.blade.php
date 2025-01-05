@@ -5,18 +5,29 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script type="module" src="{{ asset ('/js/javascript.js') }}" defer></script>
     <link rel="stylesheet" href="{{ asset('css/home.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/burger.css') }}">
     <title>Moocycle</title>
     @yield('head')
 </head>
 <body>
-    <header>
-        <div id="logo">
-            <img src="/assets/logo.png" alt="logo">
-        </div>
+<header>
         <div id = "clock"></div>
-        <div class = "title">
-            Accueil
+        <div class="off-screen-menu">
+            <ul>
+                <li><a href="#">Accueil</a></li>
+                <li><a href="#">Compte</a></li>
+                <li><a href="#">Langues</a></li>
+                <li><a href="#">Paramètres</a></li>
+                <li><a href="#">Aide</a></li>
+            </ul>
         </div>
+        <nav>
+            <div class="ham-menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </nav>
     </header>
     <main>
         <div class = "content">
