@@ -14,11 +14,11 @@
         <div id = "clock"></div>
         <div class="off-screen-menu">
             <ul>
-                <li><a href="#">Accueil</a></li>
+                <li><a href="{{ route('home') }}">Accueil</a></li>
                 <li><a href="#">Compte</a></li>
                 <li><a href="#">Langues</a></li>
                 <li><a href="#">Paramètres</a></li>
-                <li><a href="#">Aide</a></li>
+                <li><a href="#">Aide</a></li> 
             </ul>
         </div>
         <nav>

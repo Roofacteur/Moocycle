@@ -2,25 +2,30 @@
 
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\CowController;
+
 
 Route::get('/', function () {
     return view('layouts.app');
 });
+
 Route::get('/home', function () {
     return view('welcome');
-});
-Route::get('/cows', function () {
-    return view('layouts.cows');
-});
+})->name('home');
+
+Route::get('/cows', [CowController::class, 'index'])->name('cows');
+
 Route::get('/calendar', function () {
     return view('layouts.calendar');
-});
+})->name('calendar');
+
 Route::get('/health', function () {
     return view('layouts.health');
-});
+})->name('health');
+
 Route::get('/tips', function () {
     return view('layouts.tips');
-});
+})->name('tips');
 
 
 Route::get('/dashboard', function () {

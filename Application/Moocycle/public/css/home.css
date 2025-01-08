@@ -74,7 +74,7 @@ body {
     font-family: 'Dolphin-Sans';
     color: blueviolet;
     font-size: 40px;
-    margin-bottom: 100px; /* Plus d'espace sous le titre */
+    margin-bottom: 60px; /* Plus d'espace sous le titre */
     margin-top: 30px;
 }
 #clock {

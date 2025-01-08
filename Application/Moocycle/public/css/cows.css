@@ -1,0 +1,93 @@
+/* Importation de la police */
+@font-face {
+    font-family: 'Dolphin-Sans';
+    src: url('/fonts/AlteHaasGroteskBold.ttf'); /* Reference la police directement */
+}
+
+/* Styles pour le corps */
+body {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+    background-color: rgb(255, 255, 255);
+    text-align: left; /* Change l'alignement à gauche pour tout le corps */
+}
+
+/* Conteneur du titre */
+.title {
+    font-family: 'Dolphin-Sans';
+    color: blueviolet;
+    font-size: 40px;
+    margin-top: 50px;
+    margin-bottom: 30px;
+    text-align: center; /* Titre centré */
+}
+
+/* Styles pour la liste des vaches */
+.content {
+    display: flex;
+    flex-wrap: wrap; /* Permet aux éléments de s'enrouler sur plusieurs lignes */
+    justify-content: flex-start; /* Aligne les éléments à gauche */
+    gap: 30px; /* Augmenter l'espacement entre les cartes */
+    margin: 20px;
+}
+
+/* Style des éléments de la liste (cartes de vaches) */
+.content ul {
+    list-style-type: none; /* Retirer les puces */
+    padding: 0;
+    width: 100%; /* Largeur de la liste sur toute la largeur de l'écran */
+    display: flex; /* Affiche les éléments en flex */
+    flex-wrap: wrap; /* Permet le retour à la ligne des éléments */
+}
+
+/* Style des cartes */
+.content li {
+    background-color: rgb(235, 235, 255); /* Fond légèrement bleu pour chaque élément */
+    padding: 20px;
+    border-radius: 12px; /* Coins arrondis */
+    border: 2px solid blueviolet; /* Bordure autour de chaque élément */
+    font-size: 18px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    text-align: left; /* Alignement du texte à gauche */
+    width: calc(20% - 24px); /* Chaque carte occupe 20% de la largeur disponible, avec plus d'espace entre les cartes */
+    box-sizing: border-box; /* Assure que le padding est inclus dans la largeur */
+}
+
+.content li:hover {
+    transform: translateY(-5px); /* Effet de survol avec léger déplacement */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); /* Ombre au survol */
+}
+
+/* Pour afficher les span et p sur la même ligne */
+.content li div {
+    display: flex; /* Utilise flex pour aligner les span et p */
+    margin-bottom: 8px; /* Espacement entre les lignes */
+}
+
+.content li span {
+    font-weight: bold;
+    margin-right: 10px; /* Espace entre le span (titre) et le p (contenu) */
+    color: blueviolet;
+}
+
+.content li p {
+    margin: 0; /* Supprime les marges par défaut */
+    color: #333; /* Couleur du texte */
+}
+
+/* Titres et texte des vaches */
+.content li span {
+    display: inline-block;
+    margin-right: 10px;
+}
+
+.content li p {
+    display: inline-block;
+    color: #333; /* Couleur du texte */
+    margin: 0;
+}
+
+#enhancedText {
+    font-size: 30px;
+}
