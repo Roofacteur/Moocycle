@@ -15,7 +15,7 @@
         <div class="content">
             <ul>
                 @foreach($cows as $cow)
-                    <li>
+                    <li id="cow-li">
                         <div id="enhancedText"><span><p>{{ $cow->nom }}</p></span></div>
                         <div ><span>Collier : {{ $cow->numero_collier }}</span></div>
                         <div ><span>Numéro : {{ $cow->numero_oreille }}</span></div>

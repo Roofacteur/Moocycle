@@ -45,19 +45,23 @@ body {
 .content li {
     background-color: rgb(235, 235, 255); /* Fond légèrement bleu pour chaque élément */
     padding: 20px;
-    border-radius: 12px; /* Coins arrondis */
-    border: 2px solid blueviolet; /* Bordure autour de chaque élément */
+    border-radius: 8px;
+    border: 2px solid blueviolet;
     font-size: 18px;
     transition: transform 0.3s ease, box-shadow 0.3s ease;
-    text-align: left; /* Alignement du texte à gauche */
-    width: calc(20% - 24px); /* Chaque carte occupe 20% de la largeur disponible, avec plus d'espace entre les cartes */
-    box-sizing: border-box; /* Assure que le padding est inclus dans la largeur */
+    text-align: left;
+    width: calc(20% - 24px);
+    box-sizing: border-box;
+    position: relative; /* Nécessaire pour que le bouton "Action" positionné soit à l'intérieur */
+    height: 200px; /* Fixer une hauteur uniforme */
+    overflow: hidden; /* Empêche le contenu de dépasser */
 }
 
 .content li:hover {
-    transform: translateY(-5px); /* Effet de survol avec léger déplacement */
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); /* Ombre au survol */
+    transform: translateY(-5px);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
 }
+
 
 /* Pour afficher les span et p sur la même ligne */
 .content li div {
@@ -90,4 +94,35 @@ body {
 
 #enhancedText {
     font-size: 30px;
+}
+/* Style des boutons */
+.action-btn {
+    position: absolute;
+    bottom: 10px; /* Positionné à 10px du bas de l'élément */
+    left: 10px; /* Aligner à gauche avec un espace de 10px */
+    padding: 5px 10px;
+    background-color: blueviolet;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 0.9rem;
+    opacity: 0; /* Masqué par défaut */
+    transition: opacity 0.3s ease;
+}
+
+.content li:hover .action-btn {
+    opacity: 1; /* Afficher le bouton au survol */  
+    margin-left: 10px;
+    padding: 5px 10px;
+    background-color: blueviolet;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 0.9rem;
+}
+
+.action-btn:hover {
+    background-color: blueviolet;
 }

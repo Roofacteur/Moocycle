@@ -37,6 +37,7 @@
 .off-screen-menu a{
     color: white;
     text-decoration: none;
+    width: 100%;
 }
 .off-screen-menu.active {
     left: 0; /* Fait apparaître le menu à gauche */

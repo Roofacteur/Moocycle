@@ -6,7 +6,7 @@
 <body>
     <header>
         <div class = "title">
-            Santé générale
+            Événements sanitaires
         </div>
     </header>
     <main>

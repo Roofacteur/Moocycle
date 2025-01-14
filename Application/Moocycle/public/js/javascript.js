@@ -22,3 +22,32 @@ hamMenu.addEventListener("click", () => {
   hamMenu.classList.toggle("active");
   offScreenMenu.classList.toggle("active");
 });
+
+document.querySelectorAll('#cow-li').forEach((li) => {
+  li.addEventListener('mouseover', function () {
+      // Vérifier si le bouton n'existe pas déjà
+      if (!li.querySelector('.action-btn')) {
+          // Créer un bouton
+          const btn = document.createElement('button');
+          btn.className = 'action-btn'; // Classe pour le style
+          btn.textContent = 'Action'; // Texte du bouton
+          btn.onclick = function () {
+              alert('Action sur ' + li.querySelector('p').textContent);
+          };
+
+          // Ajouter le bouton à la fin du li
+          li.appendChild(btn);
+      }
+  });
+
+  li.addEventListener('mouseout', function (event) {
+      // Vérifier si la souris quitte réellement le <li> (et non un enfant comme le bouton)
+      if (!li.contains(event.relatedTarget)) {
+          // Supprimer le bouton lorsque la souris quitte l'élément
+          const btn = li.querySelector('.action-btn');
+          if (btn) {
+              li.removeChild(btn);
+          }
+      }
+  });
+});
