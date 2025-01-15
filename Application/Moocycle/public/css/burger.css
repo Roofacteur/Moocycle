@@ -11,9 +11,10 @@
     max-width: 450px;
     position: fixed;
     top: 0;
-    left: -450px; /* Positionne le menu en dehors de l'écran à gauche */
+    left: -450px; /* Positionné hors de l'écran à gauche */
     font-size: 2.5rem;
-    transition: .3s ease; /* Animation fluide pour l'apparition/disparition */
+    transition: .3s ease;
+    z-index: 1000; /* Priorité visuelle plus élevée */
 }
 .off-screen-menu ul{
     list-style: none;
@@ -50,7 +51,7 @@
     position: absolute;
     top: 10px; /* Ajuste la hauteur depuis le haut */
     left: 10px; /* Ajuste l'écart par rapport à la gauche */
-    z-index: 10; /* Assure que le menu burger est au-dessus des autres éléments */
+    z-index: 1010; /* Assure que le menu burger est au-dessus des autres éléments */
 }
 .ham-menu:hover {
     cursor: pointer;

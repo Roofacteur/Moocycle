@@ -24,30 +24,44 @@ hamMenu.addEventListener("click", () => {
 });
 
 document.querySelectorAll('#cow-li').forEach((li) => {
-  li.addEventListener('mouseover', function () {
-      // Vérifier si le bouton n'existe pas déjà
-      if (!li.querySelector('.action-btn')) {
-          // Créer un bouton
-          const btn = document.createElement('button');
-          btn.className = 'action-btn'; // Classe pour le style
-          btn.textContent = 'Action'; // Texte du bouton
-          btn.onclick = function () {
-              alert('Action sur ' + li.querySelector('p').textContent);
-          };
+    li.addEventListener('mouseover', function () {
+        if (!li.querySelector('.btn-container')) {
+            // Créer le conteneur pour les boutons
+            const btnContainer = document.createElement('div');
+            btnContainer.className = 'btn-container';
+            
+            // Créer le bouton Modifier
+            const btnModifier = document.createElement('a');  // Utilisation de <a> pour un lien
+            btnModifier.className = 'action-btn';
+            btnModifier.textContent = 'Modifier';
+            btnModifier.href =`{{ route('editcows') }}`;
 
-          // Ajouter le bouton à la fin du li
-          li.appendChild(btn);
-      }
-  });
+            // Ajouter le lien de la route Laravel dans href
+            const numTblVache = li.querySelector('p').textContent;  // Assure-toi de récupérer le bon ID (num_tblVache)
+            const editLink = li.dataset.href;  // Récupérer l'URL depuis data-href
+            btnModifier.href = editLink; // Lier le lien vers la page d'édition
 
-  li.addEventListener('mouseout', function (event) {
-      // Vérifier si la souris quitte réellement le <li> (et non un enfant comme le bouton)
-      if (!li.contains(event.relatedTarget)) {
-          // Supprimer le bouton lorsque la souris quitte l'élément
-          const btn = li.querySelector('.action-btn');
-          if (btn) {
-              li.removeChild(btn);
-          }
-      }
-  });
+            // Créer le bouton Supprimer
+            const btnSupprimer = document.createElement('a');  // Même pour le bouton Supprimer
+            btnSupprimer.className = 'action-btn';
+            btnSupprimer.textContent = 'Supprimer';
+            btnSupprimer.href = ``; // Utilisation de num_tblVache pour la suppression
+
+            // Ajouter les boutons au conteneur
+            btnContainer.appendChild(btnModifier);
+            btnContainer.appendChild(btnSupprimer);
+        
+            // Ajouter le conteneur au li
+            li.appendChild(btnContainer);
+        }
+    });
+    
+    li.addEventListener('mouseout', function (event) {
+        if (!li.contains(event.relatedTarget)) {
+            const btnContainer = li.querySelector('.btn-container');
+            if (btnContainer) {
+                li.removeChild(btnContainer);
+            }
+        }
+    });
 });

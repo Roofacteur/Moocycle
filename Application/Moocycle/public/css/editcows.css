@@ -1,0 +1,32 @@
+/* Importation de la police */
+@font-face {
+    font-family: 'Dolphin-Sans';
+    src: url('/fonts/AlteHaasGroteskBold.ttf'); /* Reference la police directement */
+}
+
+/* Styles pour le corps */
+body {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+    background-color: rgb(255, 255, 255);
+    text-align: left; /* Change l'alignement à gauche pour tout le corps */
+}
+
+/* Conteneur du titre */
+.title {
+    font-family: 'Dolphin-Sans';
+    color: blueviolet;
+    font-size: 40px;
+    margin-top: 50px;
+    margin-bottom: 30px;
+    text-align: center; /* Titre centré */
+}
+
+/* Conteneur principal des cartes */
+.content {
+    display: flex;
+    flex-wrap: wrap; /* Permet de passer à une nouvelle ligne */
+    justify-content: center; /* Centre les éléments horizontalement */
+    gap: 0; /* Retirer le gap si les marges gèrent l'espacement */
+}

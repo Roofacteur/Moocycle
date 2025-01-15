@@ -23,13 +23,12 @@ body {
     text-align: center; /* Titre centré */
 }
 
-/* Styles pour la liste des vaches */
+/* Conteneur principal des cartes */
 .content {
     display: flex;
-    flex-wrap: wrap; /* Permet aux éléments de s'enrouler sur plusieurs lignes */
-    justify-content: flex-start; /* Aligne les éléments à gauche */
-    gap: 30px; /* Augmenter l'espacement entre les cartes */
-    margin: 20px;
+    flex-wrap: wrap; /* Permet de passer à une nouvelle ligne */
+    justify-content: center; /* Centre les éléments horizontalement */
+    gap: 0; /* Retirer le gap si les marges gèrent l'espacement */
 }
 
 /* Style des éléments de la liste (cartes de vaches) */
@@ -46,22 +45,21 @@ body {
     background-color: rgb(235, 235, 255); /* Fond légèrement bleu pour chaque élément */
     padding: 20px;
     border-radius: 8px;
-    border: 2px solid blueviolet;
+    border: 2px solid blueviolet; /* Bordure principale de chaque carte */
     font-size: 18px;
     transition: transform 0.3s ease, box-shadow 0.3s ease;
     text-align: left;
-    width: calc(20% - 24px);
+    width: calc((100% - 4 * 20px) / 5); /* Ajustement pour 5 cartes par ligne */
     box-sizing: border-box;
-    position: relative; /* Nécessaire pour que le bouton "Action" positionné soit à l'intérieur */
-    height: 200px; /* Fixer une hauteur uniforme */
-    overflow: hidden; /* Empêche le contenu de dépasser */
+    position: relative;
+    height: 200px;
+    overflow: hidden;
+    margin: 5px; /* Espacement explicite autour de chaque carte */
 }
-
 .content li:hover {
     transform: translateY(-5px);
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
 }
-
 
 /* Pour afficher les span et p sur la même ligne */
 .content li div {
@@ -95,11 +93,15 @@ body {
 #enhancedText {
     font-size: 30px;
 }
+.btn-container {
+    position: absolute;
+    bottom: 10px; /* Position du conteneur depuis le bas */
+    left: 10px; /* Position du conteneur depuis la gauche */
+    display: flex; /* Alignement des boutons en ligne */
+    gap: 10px; /* Espacement entre les boutons */
+}
 /* Style des boutons */
 .action-btn {
-    position: absolute;
-    bottom: 10px; /* Positionné à 10px du bas de l'élément */
-    left: 10px; /* Aligner à gauche avec un espace de 10px */
     padding: 5px 10px;
     background-color: blueviolet;
     color: white;
@@ -107,6 +109,7 @@ body {
     border-radius: 5px;
     cursor: pointer;
     font-size: 0.9rem;
+    text-decoration: none;
     opacity: 0; /* Masqué par défaut */
     transition: opacity 0.3s ease;
 }
@@ -125,4 +128,28 @@ body {
 
 .action-btn:hover {
     background-color: blueviolet;
+}
+/* Style pour le bouton flottant */
+.fab {
+    position: fixed;
+    bottom: 80px; /* Positionné à 20px du bas */
+    right: 30px; /* Positionné à 20px de la droite */
+    width: 80px; /* Largeur du bouton */
+    height: 80px; /* Hauteur du bouton */
+    background-color: blueviolet; /* Couleur de fond */
+    color: white; /* Couleur du texte */
+    border: none;
+    border-radius: 50%; /* Forme ronde */
+    font-size: 50px; /* Taille du "+" */
+    display: flex;
+    align-items: center; /* Centrer le contenu verticalement */
+    justify-content: center; /* Centrer le contenu horizontalement */
+    cursor: pointer; /* Curseur pointer */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Ombre portée */
+    transition: background-color 0.3s ease; /* Transition pour la couleur */
+}
+
+/* Effet au survol */
+.fab:hover {
+    background-color: darkviolet; /* Changer la couleur au survol */
 }

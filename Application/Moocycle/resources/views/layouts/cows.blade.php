@@ -24,6 +24,9 @@
                 @endforeach
             </ul>
         </div>
+        <button class="fab" aria-label="Ajouter une vache">
+            +
+        </button>
     </main>
     @endsection
     <footer>
