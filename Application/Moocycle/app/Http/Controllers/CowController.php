@@ -20,6 +20,25 @@ class CowController extends Controller
         $cow = Cow::findOrFail($id); // Trouver la vache avec l'ID
         return view('layouts.editcows', compact('cow')); // Retourne la vue de modification avec les données de la vache
     }
+    public function update(Request $request, $num_tblVache)
+    {
+        // Valider les données entrantes
+        $validated = $request->validate([
+            'nom' => 'required|string|max:255',
+            'numero_collier' => 'required|string|max:50',
+            'numero_oreille' => 'required|string|max:50',
+            'date_naissance' => 'required|date',
+        ]);
+
+        // Trouver la vache à modifier
+        $cow = Cow::where('num_tblVache', $num_tblVache)->firstOrFail();
+
+        // Mettre à jour les champs
+        $cow->update($validated);
+
+        // Rediriger avec un message de succès
+        return redirect()->route('cows')->with('success', 'Vache mise à jour avec succès !');
+    }
 
     // Méthode pour supprimer une vache
     public function destroy($num_tblVache)

@@ -10,7 +10,7 @@
     @yield('head')
 </head>
 <body>
-<header>
+    <header>
         <div id = "clock"></div>
         <div class="off-screen-menu">
             <ul>
@@ -28,7 +28,9 @@
                 <span></span>
             </div>
         </nav>
+        @yield('header')
     </header>
+    
     <main>
         <div class = "content">
             @yield('content')

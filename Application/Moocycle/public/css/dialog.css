@@ -1,0 +1,52 @@
+/* Style pour la boîte de dialogue personnalisée */
+.dialog-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    display: none;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Boîte de dialogue avec texte centré et taille augmentée */
+.dialog-box {
+    background: #fff;
+    padding: 30px; /* Plus de padding pour rendre la boîte plus grande */
+    border-radius: 8px;
+    width: 400px; /* Augmenter la largeur */
+    max-width: 90%; /* Assurez-vous qu'elle est responsive */
+    text-align: center;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    display: flex; /* Utiliser flexbox pour centrer le contenu */
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Conteneur des boutons */
+.dialog-buttons {
+    display: flex;
+    flex-direction: row; /* Les boutons sont disposés horizontalement */
+    gap: 10px; /* Espacement entre les boutons */
+    margin-top: 20px; /* Espacement supplémentaire en haut */
+}
+
+/* Boutons dans la boîte de dialogue */
+.dialog-buttons button {
+    padding: 12px 25px; /* Augmenter la taille des boutons */
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1rem; /* Taille du texte des boutons */
+}
+
+#dialog-cancel {
+    background: #f44336; /* Rouge pour le bouton Quitter */
+    color: white;
+}
+
+#dialog-cancel:hover {
+    background: #e53935;
+}

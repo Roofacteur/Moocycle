@@ -1,32 +1,142 @@
 /* Importation de la police */
 @font-face {
     font-family: 'Dolphin-Sans';
-    src: url('/fonts/AlteHaasGroteskBold.ttf'); /* Reference la police directement */
+    src: url('/fonts/AlteHaasGroteskBold.ttf');
 }
 
-/* Styles pour le corps */
-body {
+/* Reset CSS */
+* {
     margin: 0;
     padding: 0;
-    font-family: Arial, sans-serif;
-    background-color: rgb(255, 255, 255);
-    text-align: left; /* Change l'alignement à gauche pour tout le corps */
+    box-sizing: border-box;
 }
 
-/* Conteneur du titre */
-.title {
+body {
     font-family: 'Dolphin-Sans';
-    color: blueviolet;
-    font-size: 40px;
-    margin-top: 50px;
-    margin-bottom: 30px;
-    text-align: center; /* Titre centré */
+    background: #f9f9f9;
+    color: #333;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    min-height: 100vh;
+    padding: 20px;
 }
 
-/* Conteneur principal des cartes */
+/* En-tête */
+.header-title {
+    width: 100%;
+    max-width: 800px;
+    text-align: center;
+    background: rgb(155, 41, 255);
+    color: white;
+    padding: 20px;
+    border-radius: 12px;
+    margin-bottom: 40px;
+    font-size: 1.8rem;
+    font-weight: bold;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Conteneur principal */
 .content {
+    background: white;
+    width: 100%;
+    max-width: 800px;
+    padding: 30px;
+    border-radius: 16px;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+    animation: slideIn 0.6s ease-in-out;
+    border-top: 6px solid rgb(155, 41, 255);
+    margin-bottom: 20px; /* Ajout d'un espace entre les cartes */
+}
+
+/* Animation subtile */
+@keyframes slideIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Champs du formulaire */
+.form-group {
+    margin-bottom: 25px;
     display: flex;
-    flex-wrap: wrap; /* Permet de passer à une nouvelle ligne */
-    justify-content: center; /* Centre les éléments horizontalement */
-    gap: 0; /* Retirer le gap si les marges gèrent l'espacement */
+    flex-direction: column;
+    width: 100%; /* Assurez-vous que chaque champ occupe toute la largeur du conteneur */
+}
+
+.form-group label {
+    font-weight: 600;
+    font-size: 1rem;
+    margin-bottom: 10px;
+    color: rgb(155, 41, 255);
+}
+
+.form-group input {
+    padding: 15px 20px;
+    font-size: 1rem;
+    border: 2px solid #ddd;
+    border-radius: 12px;
+    outline: none;
+    transition: border-color 0.3s ease, background 0.3s ease;
+    width: 100%; /* Assurez-vous que chaque champ occupe toute la largeur du conteneur */
+}
+
+.form-group input:focus {
+    border-color: rgb(155, 41, 255);
+    background: #f9f5ff;
+}
+
+/* Boutons */
+button {
+    padding: 15px 25px;
+    font-size: 1.1rem;
+    font-weight: bold;
+    border-radius: 12px;
+    text-decoration: none;
+    cursor: pointer;
+    transition: background 0.3s ease, transform 0.2s ease;
+    color: white;
+    text-align: center;
+    width: 100%;
+    background: rgb(0, 185, 0);
+    border: none;
+    margin-top: 20px; /* Espacement supplémentaire pour les boutons */
+}
+
+button:hover {
+    background: rgb(0, 146, 0);
+    transform: scale(1.05);
+}
+/* Bouton quitter */
+button.cancel {
+    background: #f44336; /* Rouge pour le bouton Quitter */
+    color: white;
+    margin-top: 10px;
+}
+
+button.cancel:hover {
+    background: #e53935;
+}
+
+/* Responsive Design */
+@media (max-width: 600px) {
+    .content {
+        padding: 20px;
+    }
+
+    .form-group label {
+        font-size: 0.9rem;
+    }
+
+    button {
+        padding: 12px 20px;
+        font-size: 1rem;
+    }
 }

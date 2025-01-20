@@ -16,6 +16,7 @@ Route::get('/home', function () {
 
 Route::get('/cows', [CowController::class, 'index'])->name('cows');
 Route::get('/cows/edit/{num_tblVache}', [CowController::class, 'edit'])->name('editcows');
+Route::put('/cows/update/{num_tblVache}', [CowController::class, 'update'])->name('updatecows');
 Route::get('/cows/delete/{num_tblVache}', [CowController::class, 'destroy'])->name('deletecows');
 
 
