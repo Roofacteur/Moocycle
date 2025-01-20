@@ -13,11 +13,10 @@ Route::get('/home', function () {
     return view('welcome');
 })->name('home');
 
-
-Route::get('/cows', [CowController::class, 'index'])->name('cows');
-Route::get('/cows/edit/{num_tblVache}', [CowController::class, 'edit'])->name('editcows');
+Route::get('/cows', [CowController::class, 'index'])->name('cows.index');
+Route::delete('/cows/{num_tblVache}', [CowController::class, 'destroy'])->name('deletecows');
 Route::put('/cows/update/{num_tblVache}', [CowController::class, 'update'])->name('updatecows');
-Route::get('/cows/delete/{num_tblVache}', [CowController::class, 'destroy'])->name('deletecows');
+Route::get('/cows/edit/{num_tblVache}', [CowController::class, 'edit'])->name('editcows');
 
 
 Route::get('/calendar', function () {

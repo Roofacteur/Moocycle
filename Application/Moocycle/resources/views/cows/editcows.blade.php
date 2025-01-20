@@ -36,14 +36,25 @@
         <label for="date_naissance">Date de naissance</label>
         <input type="date" id="date_naissance" name="date_naissance" value="{{ $cow->date_naissance }}" required>
     </div>
-
+    <div class="form-group">
+        <label for="num_tblRace">Race</label>
+        <select name="num_tblRace" id="num_tblRace" required>
+            <option value="" disabled {{ !$currentRace ? 'selected' : '' }}>Sélectionner une race</option>
+            @foreach($races as $race)
+                <option value="{{ $race->num_tblRace }}" 
+                    {{ $currentRace && $currentRace->num_tblRace == $race->num_tblRace ? 'selected' : '' }}>
+                    {{ $race->nom }}
+                </option>
+            @endforeach
+        </select>
+    </div>
     <button type="submit">Enregistrer</button>
-    <a href="http://moocycle.test/cows">
+    <a href="{{ route('cows.index') }}">
         <button type="button" class="cancel">Annuler</button>
     </a>
 </form>
 <!-- Boîte de dialogue personnalisée -->
-<div id="custom-dialog" class="dialog-overlay">
+<div id="custom-dialog" class="dialog-overlay" style="display: none;">
     <div class="dialog-box">
         <h3 id="dialog-title">Confirmation</h3>
         <p id="dialog-message">Vos changements ne seront pas enregistrés. Voulez-vous vraiment quitter ?</p>
@@ -55,6 +66,7 @@
         </div>
     </div>
 </div>
+
 @endsection
 <footer>
 </footer>

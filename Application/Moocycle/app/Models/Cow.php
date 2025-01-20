@@ -38,4 +38,8 @@ class Cow extends Model
         'date_insemination',
         'date_naissance',
     ];
+    public function races()
+    {
+        return $this->belongsToMany(Race::class, 'tbl_raceVache', 'num_tblVache', 'num_tblRace');
+    }
 }
