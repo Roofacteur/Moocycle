@@ -42,11 +42,18 @@
     font-size: 1rem; /* Taille du texte des boutons */
 }
 
-#dialog-cancel {
-    background: #f44336; /* Rouge pour le bouton Quitter */
+#dialog-confirm{
+    background: blueviolet; /* Rouge pour le bouton Quitter */
     color: white;
 }
+#dialog-confirm:hover {
+    background: rgb(110, 34, 180);
+}
 
+#dialog-cancel {
+    background: white; /* Rouge pour le bouton Quitter */
+    color: black;
+}
 #dialog-cancel:hover {
-    background: #e53935;
+    background: #dddddd;
 }

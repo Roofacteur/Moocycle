@@ -3,6 +3,8 @@ document.addEventListener('DOMContentLoaded', function() {
     var dialogConfirm = document.getElementById('dialog-confirm');
     var dialogCancel = document.getElementById('dialog-cancel');
     var deleteUrl = null;
+    var dialogTitle = document.getElementById('dialog-title');
+    var dialogMessage = document.getElementById('dialog-message');
 
     // Fonction pour afficher le dialogue de confirmation de suppression
     function showDeleteConfirmation(li) {
@@ -34,7 +36,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
         // Récupérer le nom de la vache à partir de l'attribut 'data-cow-name'
         const cowName = li.getAttribute('data-cow-name');
-        document.getElementById('dialog-message').textContent = `Voulez-vous vraiment supprimer la vache ${cowName} ?`; // Afficher le nom de la vache
+        dialogMessage.textContent = `Voulez-vous vraiment supprimer ${cowName} ?`; // Afficher le nom de la vache
     }
 
     dialogConfirm.addEventListener('click', function() {
@@ -93,4 +95,73 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         });
     });
+
+    // Gestion du dialogue de confirmation de sortie sans sauvegarder les changements
+    var cancelButton = document.querySelector('.cancel');
+
+    // Vérification des changements dans le formulaire
+    cancelButton.addEventListener('click', function(event) {
+        var form = document.querySelector('form');
+        var inputs = form.querySelectorAll('input, select'); // Inclure les <select> dans la détection de changement
+        var isDirty = false;
+
+        // Parcours tous les champs pour vérifier si des changements ont été effectués
+        inputs.forEach(function(input) {
+            if (input.tagName === 'SELECT') {
+                // Vérifie si la valeur sélectionnée est différente de la valeur par défaut
+                if (input.value !== input.getAttribute('data-default')) {
+                    isDirty = true;
+                }
+            } else {
+                // Vérifie si la valeur de l'input est différente de sa valeur par défaut
+                if (input.value !== input.defaultValue) {
+                    isDirty = true;
+                }
+            }
+        });
+
+        // Si des changements ont été effectués, afficher le dialogue
+        if (isDirty) {
+            event.preventDefault(); // Empêche la navigation
+            customDialog.style.display = 'flex'; // Affiche la boîte de dialogue
+            dialogTitle.textContent = "Attention"; // Change le titre de la boîte de dialogue
+            dialogMessage.textContent = "Vos changements ne seront pas enregistrés. Voulez-vous vraiment quitter ?";
+        } else {
+            window.location.href = cancelButton.href; // Permet de quitter sans confirmation
+        }
+    });
+
+    // Si l'utilisateur confirme (Oui) pour quitter sans sauvegarder
+    dialogConfirm.addEventListener('click', function() {
+        customDialog.style.display = 'none'; // Cache la boîte de dialogue
+        window.location.href = cancelButton.getAttribute('href'); // Utilise l'URL de href du bouton Annuler
+    });
+
+    // Si l'utilisateur annule (Non) pour rester sur la page
+    dialogCancel.addEventListener('click', function() {
+        customDialog.style.display = 'none'; // Cache la boîte de dialogue
+    });
+
+    // Ajout des valeurs par défaut aux champs select pour la comparaison
+    var selects = document.querySelectorAll('select');
+    selects.forEach(function(select) {
+        select.setAttribute('data-default', select.value); // Ajoute un attribut data-default pour garder la valeur initiale
+    });
+});
+document.addEventListener('DOMContentLoaded', function() {
+    // Code existant...
+
+    // Sélectionner les éléments nécessaires
+    const hamMenu = document.querySelector('.ham-menu');
+    const offScreenMenu = document.querySelector('.off-screen-menu');
+
+    if (hamMenu && offScreenMenu) {
+        hamMenu.addEventListener('click', function() {
+            // Ajouter ou supprimer la classe "active"
+            hamMenu.classList.toggle('active');
+            offScreenMenu.classList.toggle('active');
+        });
+    }
+
+    // Assurez-vous que votre gestionnaire d'événements ne crée pas de conflits avec d'autres parties de votre code
 });
