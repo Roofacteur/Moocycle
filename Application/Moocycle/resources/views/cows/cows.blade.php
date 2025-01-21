@@ -1,47 +1,76 @@
 @extends('layouts.app')
-<!DOCTYPE html>
-<html lang="en">
-<head>
+
+@section('head')
     <link rel="stylesheet" href="{{ asset('css/cows.css') }}">
-    <link rel="stylesheet" href="{{ asset('css/dialog.css') }}">
     <script type="module" src="{{ asset ('/js/javascript.js') }}" defer></script>
-    <meta name="csrf-token" content="{{ csrf_token() }}">
-</head>
+@endsection
+
 <body>
     <header>
         <div class="title">
             Mes vaches
         </div>
     </header>
+    
     @section('content')
+        <div>
+            <button id="search-btn" class ="btns">Rechercher</button>
+            <button id="filters-btn" class ="btns">Filtres</button>
+            <div id="filters" style="display: none;">
+                <form method="GET" action="{{ route('cows.filter') }}">
+                    <label for="race">Filtrer par race :</label>
+                    <select name="race" id="race">
+                        <option value="">Toutes les races</option>
+                        @foreach($races as $race)
+                            <option value="{{ $race->id }}" {{ request('race') == $race->id ? 'selected' : '' }}>
+                                {{ $race->nom }}
+                            </option>
+                        @endforeach
+                    </select>
+                    <button type="submit">Filtrer</button>
+                </form>
+            </div>
+        </div>
+
         <ul>
-        @foreach($cows as $cow)
-        <li id="cow-li" 
-            data-edit-href="{{ route('editcows', ['num_tblVache' => $cow->num_tblVache]) }}" 
-            data-delete-href="{{ route('deletecows', ['num_tblVache' => $cow->num_tblVache]) }}"
-            data-cow-name="{{ $cow->nom }}">
-            <div id="enhancedText"><span><p>{{ $cow->nom }}</p></span></div>
-            <div><span>Collier : {{ $cow->numero_collier }}</span></div>
-            <div><span>Numéro : {{ $cow->numero_oreille }}</span></div>
-            <div><span>Naissance :</span> <p>{{ $cow->date_naissance }}</p></div>
-        </li>
-        @endforeach
+            @if($cows->isEmpty())
+                <p>Aucune vache trouvée.</p>
+            @endif
+            @foreach($cows as $cow)
+                <li id="cow-li" 
+                    data-edit-href="{{ route('editcows', ['num_tblVache' => $cow->num_tblVache]) }}" 
+                    data-delete-href="{{ route('deletecows', ['num_tblVache' => $cow->num_tblVache]) }}"
+                    data-cow-name="{{ $cow->nom }}">
+                    <div id="enhancedText"><span><p>{{ $cow->nom }}</p></span></div>
+                    <div><span>Collier : {{ $cow->numero_collier }}</span></div>
+                    <div><span>Numéro : {{ $cow->numero_oreille }}</span></div>
+                    <div><span>Race :</span> 
+                        <p>
+                            @foreach($cow->races as $race)
+                                {{ $race->nom }}
+                            @endforeach
+                        </p>
+                    </div>
+                </li>
+            @endforeach
         </ul>
-    <button class="fab" aria-label="Ajouter une vache">
-        +
-    </button>
+
+        <a href="{{ route('addcows.form') }}" class="fab" aria-label="Ajouter une vache">
+            +
+        </a>
     <div id="custom-dialog" class="dialog-overlay" style="display: none;">
         <div class="dialog-box">
             <h3 id="dialog-title">Confirmation</h3>
             <p id="dialog-message">Voulez-vous vraiment supprimer cette vache ?</p>
             <div class="dialog-buttons">
+            <a href="http://moocycle.test/cows">
                 <button id="dialog-confirm">Oui</button>
+            </a>
                 <button id="dialog-cancel">Non</button>
             </div>
         </div>
     </div>
     @endsection
-    <footer>
-    </footer>
+<footer>
+</footer>
 </body>
-</html>

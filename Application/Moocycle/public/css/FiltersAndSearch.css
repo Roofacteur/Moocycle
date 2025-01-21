@@ -1,0 +1,38 @@
+.btns {
+    padding: 5px 10px;
+    background-color: blueviolet;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 0.9rem;
+    text-decoration: none;
+    transition: opacity 0.3s ease;
+}
+.action-btn:hover {
+    background-color: blueviolet;
+}
+.btns:hover {
+    background-color: rgb(111, 35, 182);
+}
+
+/* Style pour la zone de filtre */
+#filters {
+    background-color: #f9f9f9;
+    padding: 10px;
+    border: 1px solid #ccc;
+    margin-top: 10px;
+}
+
+/* Cacher la zone de filtre par défaut */
+#filters form {
+    display: flex;
+    flex-direction: column;
+}
+
+#filters select,
+#filters button {
+    margin: 10px 0;
+    padding: 8px;
+    font-size: 16px;
+}

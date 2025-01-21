@@ -11,13 +11,13 @@
     align-items: center;
 }
 
-/* Boîte de dialogue avec texte centré et taille augmentée */
+/* Boîte de dialogue avec texte centré et taille ajustée */
 .dialog-box {
     background: #fff;
-    padding: 30px; /* Plus de padding pour rendre la boîte plus grande */
+    padding: 30px; /* Assurer que les deux boîtes ont le même padding */
     border-radius: 8px;
-    width: 400px; /* Augmenter la largeur */
-    max-width: 90%; /* Assurez-vous qu'elle est responsive */
+    width: 400px; /* Uniformiser la largeur des boîtes */
+    max-width: 90%; /* Assurez-vous qu'elle reste responsive */
     text-align: center;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
     display: flex; /* Utiliser flexbox pour centrer le contenu */
@@ -36,23 +36,26 @@
 
 /* Boutons dans la boîte de dialogue */
 .dialog-buttons button {
-    padding: 12px 25px; /* Augmenter la taille des boutons */
+    padding: 12px 25px; /* Assurer la même taille des boutons */
     border-radius: 5px;
     cursor: pointer;
     font-size: 1rem; /* Taille du texte des boutons */
 }
 
-#dialog-confirm{
-    background: blueviolet; /* Rouge pour le bouton Quitter */
+/* Styles pour le bouton de confirmation */
+#dialog-confirm {
+    background: blueviolet;
     color: white;
 }
 #dialog-confirm:hover {
     background: rgb(110, 34, 180);
 }
 
+/* Styles pour le bouton de cancel */
 #dialog-cancel {
-    background: white; /* Rouge pour le bouton Quitter */
+    background: white;
     color: black;
+    border: 1px solid #ddd; /* Ajout d'une bordure pour plus de consistance */
 }
 #dialog-cancel:hover {
     background: #dddddd;

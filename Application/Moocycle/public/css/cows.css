@@ -141,6 +141,7 @@ body {
     border: none;
     border-radius: 50%; /* Forme ronde */
     font-size: 50px; /* Taille du "+" */
+    text-decoration: none;
     display: flex;
     align-items: center; /* Centrer le contenu verticalement */
     justify-content: center; /* Centrer le contenu horizontalement */

@@ -11,7 +11,7 @@
     </header>
     <main>
         <div class = "mainButtons">
-        <a href="{{ route('cows.index') }}">
+        <a href="{{ route('cows.get') }}">
                 <button id="buttonCows" class="mainButtons">
                     <img src="/assets/cowicon.png" alt="Cows">
                 </button>

@@ -6,17 +6,20 @@ use App\Http\Controllers\CowController;
 
 
 Route::get('/', function () {
-    return view('layouts.app');
-});
-
-Route::get('/home', function () {
     return view('welcome');
 })->name('home');
 
-Route::get('/cows', [CowController::class, 'index'])->name('cows.index');
-Route::delete('/cows/{num_tblVache}', [CowController::class, 'destroy'])->name('deletecows');
-Route::put('/cows/update/{num_tblVache}', [CowController::class, 'update'])->name('updatecows');
-Route::get('/cows/edit/{num_tblVache}', [CowController::class, 'edit'])->name('editcows');
+// Route pour afficher toutes les vaches
+Route::get('/cows', [CowController::class, 'get'])->name('cows.get');
+// Route pour filtrer les vaches par race
+Route::get('/cows/filter', [CowController::class, 'filter'])->name('cows.filter');
+
+
+Route::delete('/cows/{num_tblVache}', [CowController::class, 'destroy'])->name('deletecows'); // Pour supprimer une vache
+Route::post('/cows/store', [CowController::class, 'store'])->name('addcows.store'); // Pour soumettre le formulaire
+Route::get('/cows/add', [CowController::class, 'create'])->name('addcows.form'); // Pour afficher le formulaire
+Route::put('/cows/update/{num_tblVache}', [CowController::class, 'update'])->name('updatecows'); //Pour modifier une vache
+Route::get('/cows/edit/{num_tblVache}', [CowController::class, 'edit'])->name('editcows'); //Pour appeler la page de modification de la vache
 
 
 Route::get('/calendar', function () {

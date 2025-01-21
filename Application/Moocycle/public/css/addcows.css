@@ -1,0 +1,144 @@
+/* Importation de la police */
+@font-face {
+    font-family: 'Dolphin-Sans';
+    src: url('/fonts/AlteHaasGroteskBold.ttf');
+}
+
+/* Reset CSS */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Style général du body */
+body {
+    font-family: 'Dolphin-Sans';
+    background: #f9f9f9;
+    color: #333;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    min-height: 100vh;
+    padding: 20px;
+}
+.error-message {
+    color: red;
+    font-size: 12px;
+}
+/* En-tête */
+.header-title {
+    width: 100%;
+    max-width: 800px;
+    text-align: center;
+    background: rgb(155, 41, 255);
+    color: white;
+    padding: 20px;
+    border-radius: 12px;
+    margin-bottom: 40px;
+    font-size: 1.8rem;
+    font-weight: bold;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+/* Conteneur du formulaire */
+.container {
+    background: white;
+    width: 100%;
+    width: 500px;
+    padding: 30px;
+    border-radius: 16px;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+    animation: slideIn 0.6s ease-in-out;
+    border-top: 6px solid rgb(155, 41, 255);
+    margin-bottom: 20px;
+}
+/* Animation subtile */
+@keyframes slideIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Champs du formulaire */
+form div {
+    margin-bottom: 25px;
+    display: flex;
+    flex-direction: column;
+    width: 100%; /* Assurez-vous que chaque champ occupe toute la largeur du conteneur */
+}
+
+form label {
+    font-weight: 600;
+    font-size: 1rem;
+    margin-bottom: 10px;
+    color: rgb(155, 41, 255);
+}
+
+form input, form select {
+    padding: 15px 20px;
+    font-size: 1rem;
+    border: 2px solid #ddd;
+    border-radius: 12px;
+    outline: none;
+    transition: border-color 0.3s ease, background 0.3s ease;
+    width: 100%; /* Assurez-vous que chaque champ occupe toute la largeur du conteneur */
+}
+
+form input:focus, form select:focus {
+    border-color: rgb(155, 41, 255);
+    background: #f9f5ff;
+}
+
+/* Boutons */
+button {
+    padding: 15px 25px;
+    font-size: 1.1rem;
+    font-weight: bold;
+    border-radius: 12px;
+    text-decoration: none;
+    cursor: pointer;
+    transition: background 0.3s ease, transform 0.2s ease;
+    color: white;
+    text-align: center;
+    width: 100%;
+    background: rgb(0, 185, 0);
+    border: none;
+    margin-top: 20px; /* Espacement supplémentaire pour les boutons */
+}
+
+button:hover {
+    background: rgb(0, 146, 0);
+    transform: scale(1.05);
+}
+/* Bouton quitter */
+button.cancel {
+    background: #f44336; /* Rouge pour le bouton Quitter */
+    color: white;
+    margin-top: 10px;
+}
+
+button.cancel:hover {
+    background: #e53935;
+}
+
+/* Responsive Design */
+@media (max-width: 600px) {
+    .container {
+        padding: 20px;
+    }
+
+    form label {
+        font-size: 0.9rem;
+    }
+
+    button {
+        padding: 12px 20px;
+        font-size: 1rem;
+    }
+}

@@ -10,7 +10,7 @@
 @section('header')
 <div class="header-title">
         Infos sur : <span>{{ $cow->nom }}</span>
-    </div>
+</div>
 @endsection
 @section('content')
 <form action="{{ route('updatecows', ['num_tblVache' => $cow->num_tblVache]) }}" method="POST">
@@ -49,7 +49,7 @@
         </select>
     </div>
     <button type="submit">Enregistrer</button>
-    <a href="{{ route('cows.index') }}">
+    <a href="{{ route('cows.get') }}">
         <button type="button" class="cancel">Annuler</button>
     </a>
 </form>

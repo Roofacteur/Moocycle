@@ -5,7 +5,16 @@ document.addEventListener('DOMContentLoaded', function() {
     var deleteUrl = null;
     var dialogTitle = document.getElementById('dialog-title');
     var dialogMessage = document.getElementById('dialog-message');
+    const hamMenu = document.querySelector('.ham-menu');
+    const offScreenMenu = document.querySelector('.off-screen-menu');
 
+    if (hamMenu && offScreenMenu) {
+        hamMenu.addEventListener('click', function() {
+            // Ajouter ou supprimer la classe "active"
+            hamMenu.classList.toggle('active');
+            offScreenMenu.classList.toggle('active');
+        });
+    }
     // Fonction pour afficher le dialogue de confirmation de suppression
     function showDeleteConfirmation(li) {
         // Créer un formulaire pour la suppression
@@ -147,21 +156,5 @@ document.addEventListener('DOMContentLoaded', function() {
     selects.forEach(function(select) {
         select.setAttribute('data-default', select.value); // Ajoute un attribut data-default pour garder la valeur initiale
     });
-});
-document.addEventListener('DOMContentLoaded', function() {
-    // Code existant...
-
-    // Sélectionner les éléments nécessaires
-    const hamMenu = document.querySelector('.ham-menu');
-    const offScreenMenu = document.querySelector('.off-screen-menu');
-
-    if (hamMenu && offScreenMenu) {
-        hamMenu.addEventListener('click', function() {
-            // Ajouter ou supprimer la classe "active"
-            hamMenu.classList.toggle('active');
-            offScreenMenu.classList.toggle('active');
-        });
-    }
-
-    // Assurez-vous que votre gestionnaire d'événements ne crée pas de conflits avec d'autres parties de votre code
+    
 });
