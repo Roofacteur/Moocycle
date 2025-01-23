@@ -11,16 +11,30 @@ Route::get('/', function () {
 
 // Route pour afficher toutes les vaches
 Route::get('/cows', [CowController::class, 'get'])->name('cows.get');
+
 // Route pour filtrer les vaches par race
 Route::get('/cows/filter', [CowController::class, 'filter'])->name('cows.filter');
 
+// Route pour afficher la moyenne des cycles d'une vache spécifique
+Route::get('/cows/{num_tblVache}/average', [CowController::class, 'average'])->name('cows.average');
 
-Route::delete('/cows/{num_tblVache}', [CowController::class, 'destroy'])->name('deletecows'); // Pour supprimer une vache
-Route::post('/cows/store', [CowController::class, 'store'])->name('addcows.store'); // Pour soumettre le formulaire
-Route::get('/cows/add', [CowController::class, 'create'])->name('addcows.form'); // Pour afficher le formulaire
-Route::put('/cows/update/{num_tblVache}', [CowController::class, 'update'])->name('updatecows'); //Pour modifier une vache
-Route::get('/cows/edit/{num_tblVache}', [CowController::class, 'edit'])->name('editcows'); //Pour appeler la page de modification de la vache
+// Route pour supprimer une vache
+Route::delete('/cows/{num_tblVache}', [CowController::class, 'destroy'])->name('deletecows');
 
+// Route pour soumettre le formulaire pour ajouter une vache
+Route::post('/cows/store', [CowController::class, 'store'])->name('addcows.store');
+
+// Route pour afficher le formulaire d'ajout de vache
+Route::get('/cows/add', [CowController::class, 'create'])->name('addcows.form');
+
+// Route pour modifier une vache
+Route::put('/cows/update/{num_tblVache}', [CowController::class, 'update'])->name('updatecows');
+
+// Route pour afficher une vache
+Route::get('/cows/info/{num_tblVache}', [CowController::class, 'show'])->name('readcows');
+
+// Route pour appeler la page de modification de la vache
+Route::get('/cows/edit/{num_tblVache}', [CowController::class, 'edit'])->name('editcows');
 
 Route::get('/calendar', function () {
     return view('layouts.calendar');

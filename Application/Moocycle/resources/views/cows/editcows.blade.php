@@ -9,7 +9,7 @@
 <body>
 @section('header')
 <div class="header-title">
-        Infos sur : <span>{{ $cow->nom }}</span>
+    Modifier <span>{{ $cow->nom }}</span>
 </div>
 @endsection
 @section('content')

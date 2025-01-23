@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Cow;
 use App\Models\Race;
+use App\Models\Logs;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 class CowController extends Controller
@@ -74,6 +76,12 @@ class CowController extends Controller
 
         return view('cows.cows', compact('cows', 'races'));
     }
+    public function show($id)
+    {
+        $cow = Cow::findOrFail($id); // Trouver la vache avec l'ID
+        $currentRace = $cow->races->first(); // Récupérer la première race associée à la vache (si une race est associée)
+        return view('cows.readcows', compact('cow', 'currentRace')); // Passer les données à la vue
+    }
 
     // Méthode pour filtrer (en fait, on réutilise get)
     public function filter(Request $request)
@@ -134,6 +142,35 @@ class CowController extends Controller
 
         // Rediriger vers la liste des vaches avec un message de succès
         return redirect()->route('cows.get')->with('success', 'Vache ajoutée avec succès !');
+    }
+    public function calculerMoyenne($idVache)
+    {
+        // Récupérer les logs de la vache triés par date
+        $vache = Vache::with(['logs' => function ($query) {
+            $query->orderBy('date_evenement', 'asc');
+        }])->findOrFail($idVache);
+
+        $dates = $vache->logs->where('insemination', false)->pluck('date_evenement');
+
+        // Vérifier qu'il y a au moins deux dates pour calculer une moyenne
+        if (count($dates) < 2) {
+            return response()->json([
+                'message' => 'Pas assez de données pour calculer la moyenne.'
+            ], 400);
+        }
+
+        $intervals = [];
+        for ($i = 1; $i < count($dates); $i++) {
+            $intervals[] = Carbon::parse($dates[$i])->diffInDays(Carbon::parse($dates[$i - 1]));
+        }
+
+        // Calculer la moyenne
+        $moyenne = array_sum($intervals) / count($intervals);
+
+        return view('vaches.moyenne', [
+            'vache' => $vache,
+            'moyenne' => round($moyenne, 2) // Arrondir à 2 décimales
+        ]);
     }
 
 }

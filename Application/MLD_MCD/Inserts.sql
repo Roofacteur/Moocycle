@@ -1,11 +1,12 @@
 USE bd_moocycle;
-INSERT INTO tbl_vaches (nom, numero_collier, numero_oreille, date_prochaine_chaleur, date_insemination, date_naissance, nombre_lactation)
-VALUES ('Valeriane', 31, '120.1576.5091.9' ,'0000-00-00','0000-00-00', '2020-11-29', 2),
-('Doudoune', 42, '120.1097.6625.5', '0000-00-00','0000-00-00', '2013-11-14', 9),
-('Fionna', 25, '120.1576.5069.8', '0000-00-00', '0000-00-00', '2020-09-12', 2),
-('Carotte', 72, '120.1220.5544.2', '0000-00-00', '0000-00-00', '2015-12-17', 7),
-('Doreen', 88, '120.1495.4401.1', '0000-00-00', '0000-00-00', '2015-12-17', 7),
-('Valomer', 57, '120.1220.5563.3', '0000-00-00', '0000-00-00', '2016-04-21', 6);
+INSERT INTO tbl_vaches (nom, numero_collier, numero_oreille, date_prochaine_chaleur, date_derniere_chaleur, date_insemination, date_naissance, nombre_lactation)
+VALUES 
+('Valeriane', 31, '120.1576.5091.9' ,'00.00.0000','00.00.0000','00.00.0000', '2020-11-29', 2),
+('Doudoune', 42, '120.1097.6625.5', '00.00.0000','00.00.0000','00.00.0000', '2013-11-14', 9),
+('Fionna', 25, '120.1576.5069.8', '00.00.0000','00.00.0000', '00.00.0000', '2020-09-12', 2),
+('Carotte', 72, '120.1220.5544.2', '00.00.0000','00.00.0000', '00.00.0000', '2015-12-17', 7),
+('Doreen', 88, '120.1495.4401.1', '00.00.0000','00.00.0000', '00.00.0000', '2015-12-17', 7),
+('Valomer', 57, '120.1220.5563.3', '00.00.0000','00.00.0000', '00.00.0000', '2016-04-21', 6);
 INSERT INTO tbl_races (nom)
 VALUES ("Holstein"),
     ("Charolaise"),
@@ -47,4 +48,4 @@ VALUES ("Holstein"),
     ("Sahiwal"),
     ("Tharparkar");
 INSERT INTO tbl_racevache
-VALUES (1, 5);
+VALUES (1, 5), (2, 5), (3,4), (4,4), (5, 4), (6,3);
