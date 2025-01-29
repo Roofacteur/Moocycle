@@ -7,6 +7,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const hamMenu = document.querySelector('.ham-menu');
     const offScreenMenu = document.querySelector('.off-screen-menu');
     const overlay = document.querySelector(".menu-overlay");
+    const deleteButtons = document.querySelectorAll('.delete-btn');
 
     if (hamMenu && offScreenMenu) {
         hamMenu.addEventListener('click', function() {
@@ -22,37 +23,6 @@ document.addEventListener('DOMContentLoaded', function() {
         offScreenMenu.classList.remove("active");
         overlay.classList.remove("active");
     });
-    function confirmDelete(button) {
-        const cowName = button.getAttribute('data-cow-name');
-        const deleteHref = button.getAttribute('data-delete-href');
-
-        // Créer un formulaire de suppression
-        const form = document.createElement('form');
-        form.method = 'POST';
-        form.action = deleteHref;
-
-        // Champ CSRF
-        const csrfToken = document.createElement('input');
-        csrfToken.type = 'hidden';
-        csrfToken.name = '_token';
-        csrfToken.value = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
-        form.appendChild(csrfToken);
-
-        // Champ méthode DELETE
-        const methodInput = document.createElement('input');
-        methodInput.type = 'hidden';
-        methodInput.name = '_method';
-        methodInput.value = 'DELETE';
-        form.appendChild(methodInput);
-
-        document.body.appendChild(form); // Ajouter temporairement au DOM
-        deleteForm = form;
-
-        // Afficher la boîte de dialogue de confirmation
-        customDialog.style.display = 'flex';
-        const dialogMessage = document.getElementById('dialog-message');
-        dialogMessage.textContent = `Voulez-vous vraiment supprimer ${cowName} ?`;
-    }
 
     dialogConfirm.addEventListener('click', function() {
         if (deleteUrl) {
@@ -115,5 +85,58 @@ document.addEventListener('DOMContentLoaded', function() {
     selects.forEach(function(select) {
         select.setAttribute('data-default', select.value); // Ajoute un attribut data-default pour garder la valeur initiale
     });
-    
+
+
+    // CA MARCHE PAS PUREE T'ES NUL CORRIGE NUL NUL NUL
+
+
+    document.body.addEventListener('click', function(event) {
+        if (event.target && event.target.matches('.delete-btn')) {
+            confirmDelete(event.target);
+        }
+    });
+    if (deleteButtons && deleteButtons.length > 0) {
+        deleteButtons.forEach(button => {
+            button.addEventListener('click', function() {
+                confirmDelete(this);
+            });
+        });
+    } else {
+        console.log("Aucun bouton de suppression trouvé !");
+    }
+    function confirmDelete(button) {
+        const cowName = button.getAttribute('data-cow-name');
+        const deleteHref = button.getAttribute('data-delete-href');
+
+        // Créer un formulaire de suppression
+        const form = document.createElement('form');
+        form.method = 'POST';
+        form.action = deleteHref;
+
+        // Champ CSRF
+        const csrfToken = document.createElement('input');
+        csrfToken.type = 'hidden';
+        csrfToken.name = '_token';
+        csrfToken.value = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+        form.appendChild(csrfToken);
+
+        // Champ méthode DELETE
+        const methodInput = document.createElement('input');
+        methodInput.type = 'hidden';
+        methodInput.name = '_method';
+        methodInput.value = 'DELETE';
+        form.appendChild(methodInput);
+
+        document.body.appendChild(form); // Ajouter temporairement au DOM
+        deleteForm = form;
+
+        // Afficher la boîte de dialogue de confirmation
+        customDialog.style.display = 'flex';
+        const dialogMessage = document.getElementById('dialog-message');
+        dialogMessage.textContent = `Voulez-vous vraiment supprimer ${cowName} ?`;
+    }
+
+
+
+
 });

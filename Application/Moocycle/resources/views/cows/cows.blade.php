@@ -42,9 +42,9 @@
                     data-delete-href="{{ route('deletecows', ['num_tblVache' => $cow->num_tblVache]) }}"
                     data-cow-name="{{ $cow->nom }}">
                     <a href="{{ route('readcows', ['num_tblVache' => $cow->num_tblVache]) }}" style="text-decoration: none; color: inherit; display: block; height: 100%; width: 100%;">
-                        <button class="delete-btn" onclick="confirmDelete(this)" data-delete-href="{{ route('deletecows', ['num_tblVache' => $cow->num_tblVache]) }}" data-cow-name="{{ $cow->nom }}">
-                            ✖
-                        </button>
+                    <button class="delete-btn" data-delete-href="{{ route('deletecows', ['num_tblVache' => $cow->num_tblVache]) }}" data-cow-name="{{ $cow->nom }}">
+                        ✖
+                    </button>
                         <div id="enhancedText"><span><p>{{ $cow->nom }}</p></span></div>
                         <div><span>Collier : {{ $cow->numero_collier }}</span></div>
                         <div><span>Numéro : {{ $cow->numero_oreille }}</span></div>
