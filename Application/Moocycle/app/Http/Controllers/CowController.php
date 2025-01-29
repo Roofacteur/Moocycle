@@ -24,14 +24,15 @@ class CowController extends Controller
     }
 
     // Méthode pour afficher le formulaire de modification d'une vache
-    public function edit($id)
+    public function edit($num_tblVache) // Utiliser num_tblVache au lieu de $id
     {
-        $cow = Cow::findOrFail($id); // Trouver la vache avec l'ID
-        $races = Race::all(); // Récupérer toutes les races
-        $currentRace = $cow->races->first(); // Récupérer la première race associée à la vache (si une race est associée)
-        
+        $cow = Cow::findOrFail($num_tblVache); // Trouver la vache avec son ID
+        $races = Race::all(); // Récupérer toutes les races disponibles
+        $currentRace = $cow->races->first(); // Récupérer la race actuelle (si disponible)
+
         return view('cows.editcows', compact('cow', 'races', 'currentRace')); // Passer les données à la vue
     }
+
 
     // Méthode pour mettre à jour une vache
     public function update(Request $request, $num_tblVache)
@@ -55,7 +56,8 @@ class CowController extends Controller
         $cow->races()->sync([$request->input('num_tblRace')]);
 
         // Redirection vers la liste des vaches (route 'cows.get')
-        return redirect()->route('cows.get')->with('success', 'Vache mise à jour avec succès !');
+        return redirect()->route('readcows', ['num_tblVache' => $cow->num_tblVache])
+        ->with('success', 'Vache mise à jour avec succès !');
     }
 
     // Méthode pour récupérer les vaches avec un filtre ou non
@@ -63,19 +65,20 @@ class CowController extends Controller
     {
         $races = Race::all();
         
-        $cowsQuery = Cow::query();
-
+        $cowsQuery = Cow::with('races'); // Charger la relation races
+    
         // Appliquer le filtre si une race est sélectionnée
         if ($request->has('race') && $request->race != '') {
-            $cowsQuery->whereHas('races', function($query) use ($request) {
-                $query->where('id', $request->race);
+            $cowsQuery->whereHas('races', function ($query) use ($request) {
+                $query->where('num_tblRace', $request->race);
             });
         }
-
-        $cows = $cowsQuery->get(); // Récupérer les vaches après le filtrage (ou pas)
-
+    
+        $cows = $cowsQuery->get(); // Récupérer les vaches après le filtrage
+    
         return view('cows.cows', compact('cows', 'races'));
     }
+    
     public function show($id)
     {
         $cow = Cow::findOrFail($id); // Trouver la vache avec l'ID

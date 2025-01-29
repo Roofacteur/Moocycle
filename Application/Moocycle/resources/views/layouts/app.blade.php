@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script type="module" src="{{ asset ('/js/overlay.js') }}" defer></script>
     <script type="module" src="{{ asset ('/js/javascript.js') }}" defer></script>
     <script type="module" src="{{ asset ('/js/clock.js') }}" defer></script>
     <script type="module" src="{{ asset ('/js/filters.js') }}" defer></script>
@@ -51,5 +52,6 @@
             </div>
             @yield('footer')
     </footer>
+    <div class="menu-overlay"></div>
 </body>
 </html>

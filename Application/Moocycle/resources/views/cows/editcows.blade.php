@@ -49,7 +49,7 @@
         </select>
     </div>
     <button type="submit">Enregistrer</button>
-    <a href="{{ route('cows.get') }}">
+    <a href="{{ route('readcows', ['num_tblVache' => $cow->num_tblVache]) }}">
         <button type="button" class="cancel">Annuler</button>
     </a>
 </form>

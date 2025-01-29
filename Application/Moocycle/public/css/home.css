@@ -17,6 +17,17 @@
         transform: translateX(-3px); /* Retour vers la gauche */
     }
 }
+/* Animation subtile */
+@keyframes slideIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
 /* Styles pour le corps */
 body {
     margin: 0;
@@ -27,6 +38,7 @@ body {
     font-family: Arial, sans-serif;
     text-align: center;
     background-color: rgb(255, 255, 255);
+        animation: slideIn 0.6s ease-in-out;  /* Effet d'animation */
 }
 /* Conteneur des boutons */
 .mainButtons {
@@ -35,6 +47,7 @@ body {
     justify-content: center; /* Centre les éléments horizontalement */
     align-items: center; /* Centre les éléments verticalement */
     gap: 20px; /* Ajoute un espacement entre les boutons */
+    animation: slideIn 0.6s ease-in-out;  /* Effet d'animation */
 }
 
 /* Style des boutons */

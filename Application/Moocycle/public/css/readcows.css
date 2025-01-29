@@ -89,3 +89,27 @@ body {
         transform: translateY(0);
     }
 }
+/* Bouton blueviolet pour les liens <a> */
+.modify-button {
+    display: inline-block;
+    background: blueviolet;
+    max-width:fit-content;
+    color: white;
+    padding: 12px 20px;
+    font-size: 18px;
+    font-weight: bold;
+    text-decoration: none;
+    border-radius: 8px;
+    transition: background 0.3s ease, transform 0.2s ease;
+}
+
+/* Effet au survol */
+.modify-button:hover {
+    background: rgb(120, 40, 200);
+    transform: scale(1.05);
+}
+
+/* Effet au clic */
+.modify-button:active {
+    transform: scale(0.95);
+}

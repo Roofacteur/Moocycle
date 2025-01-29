@@ -6,14 +6,22 @@ document.addEventListener('DOMContentLoaded', function() {
     var dialogMessage = document.getElementById('dialog-message');
     const hamMenu = document.querySelector('.ham-menu');
     const offScreenMenu = document.querySelector('.off-screen-menu');
+    const overlay = document.querySelector(".menu-overlay");
 
     if (hamMenu && offScreenMenu) {
         hamMenu.addEventListener('click', function() {
             // Ajouter ou supprimer la classe "active"
             hamMenu.classList.toggle('active');
             offScreenMenu.classList.toggle('active');
+            overlay.classList.toggle("active");
         });
     }
+    // Fermer le menu si on clique sur l'overlay
+    overlay.addEventListener("click", () => {
+        hamMenu.classList.remove("active");
+        offScreenMenu.classList.remove("active");
+        overlay.classList.remove("active");
+    });
     function confirmDelete(button) {
         const cowName = button.getAttribute('data-cow-name');
         const deleteHref = button.getAttribute('data-delete-href');

@@ -31,7 +31,7 @@ Route::get('/cows/add', [CowController::class, 'create'])->name('addcows.form');
 Route::put('/cows/update/{num_tblVache}', [CowController::class, 'update'])->name('updatecows');
 
 // Route pour afficher une vache
-Route::get('/cows/info/{num_tblVache}', [CowController::class, 'show'])->name('readcows');
+Route::get('/cows/{num_tblVache}', [CowController::class, 'show'])->name('readcows');
 
 // Route pour appeler la page de modification de la vache
 Route::get('/cows/edit/{num_tblVache}', [CowController::class, 'edit'])->name('editcows');
