@@ -81,10 +81,34 @@ class CowController extends Controller
     
     public function show($id)
     {
-        $cow = Cow::findOrFail($id); // Trouver la vache avec l'ID
-        $currentRace = $cow->races->first(); // Récupérer la première race associée à la vache (si une race est associée)
-        return view('cows.readcows', compact('cow', 'currentRace')); // Passer les données à la vue
+        $cow = Cow::with(['logs' => function ($query) {
+            $query->orderBy('date', 'asc');
+        }])->findOrFail($id);
+
+        $dates = $cow->logs->where('insemination', false)->pluck('date');
+
+        // Si moins de deux dates, retourner 20 jours par défaut
+        if (count($dates) < 2) {
+            $average = 20.0;
+        } else {
+            $intervals = [];
+            for ($i = 1; $i < count($dates); $i++) {
+                $intervals[] = Carbon::parse($dates[$i])->diffInDays(Carbon::parse($dates[$i - 1]));
+            }
+
+            // Calculer la moyenne
+            $average = array_sum($intervals) / count($intervals);
+        }
+
+        $currentRace = $cow->races->first(); // Récupérer la première race associée
+
+        return view('cows.readcows', [
+            'cow' => $cow,
+            'currentRace' => $currentRace,
+            'average' => round($average, 2) // Arrondi à 2 décimales
+        ]);
     }
+
 
     // Méthode pour filtrer (en fait, on réutilise get)
     public function filter(Request $request)
@@ -146,34 +170,73 @@ class CowController extends Controller
         // Rediriger vers la liste des vaches avec un message de succès
         return redirect()->route('cows.get')->with('success', 'Vache ajoutée avec succès !');
     }
-    public function calculerMoyenne($idVache)
+    public function average($idVache)
     {
         // Récupérer les logs de la vache triés par date
-        $vache = Vache::with(['logs' => function ($query) {
-            $query->orderBy('date_evenement', 'asc');
+        $vache = Cow::with(['logs' => function ($query) {
+            $query->orderBy('date', 'asc');
         }])->findOrFail($idVache);
 
-        $dates = $vache->logs->where('insemination', false)->pluck('date_evenement');
+        $dates = $vache->logs->where('insemination', false)->pluck('date');
 
-        // Vérifier qu'il y a au moins deux dates pour calculer une moyenne
+        // Si moins de deux dates, retourner 20 jours par défaut
         if (count($dates) < 2) {
-            return response()->json([
-                'message' => 'Pas assez de données pour calculer la moyenne.'
-            ], 400);
+            $average = 20.0;
+        } else {
+            $intervals = [];
+            for ($i = 1; $i < count($dates); $i++) {
+                $intervals[] = Carbon::parse($dates[$i])->diffInDays(Carbon::parse($dates[$i - 1]));
+            }
+
+            // Calculer la average
+            $average = array_sum($intervals) / count($intervals);
         }
 
-        $intervals = [];
-        for ($i = 1; $i < count($dates); $i++) {
-            $intervals[] = Carbon::parse($dates[$i])->diffInDays(Carbon::parse($dates[$i - 1]));
-        }
-
-        // Calculer la moyenne
-        $moyenne = array_sum($intervals) / count($intervals);
-
-        return view('vaches.moyenne', [
-            'vache' => $vache,
-            'moyenne' => round($moyenne, 2) // Arrondir à 2 décimales
+        return view('cows.readcows', [
+            'cow' => $vache, 
+            'average' => round($average, 2) // Arrondi à 2 décimales
         ]);
+    }
+    public function calendar(Request $request)
+    {
+        // Récupérer toutes les vaches avec leurs logs
+        $cows = Cow::with(['logs' => function ($query) {
+            $query->orderBy('date', 'asc');
+        }])->get();
+
+        // Calculer la moyenne des cycles pour chaque vache
+        $cycleAverages = [];
+        foreach ($cows as $cow) {
+            $dates = $cow->logs->where('insemination', false)->pluck('date');
+            if (count($dates) < 2) {
+                $cycleAverages[$cow->num_tblVache] = 21.0; // Valeur par défaut
+            } else {
+                $intervals = [];
+                for ($i = 1; $i < count($dates); $i++) {
+                    $intervals[] = Carbon::parse($dates[$i])->diffInDays(Carbon::parse($dates[$i - 1]));
+                }
+                $cycleAverages[$cow->num_tblVache] = array_sum($intervals) / count($intervals);
+            }
+        }
+
+        return view('layouts.calendar', compact('cycleAverages'));
+    }
+    public function health(Request $request)
+    {
+        $races = Race::all();
+        
+        $cowsQuery = Cow::with('races'); // Charger la relation races
+    
+        // Appliquer le filtre si une race est sélectionnée
+        if ($request->has('race') && $request->race != '') {
+            $cowsQuery->whereHas('races', function ($query) use ($request) {
+                $query->where('num_tblRace', $request->race);
+            });
+        }
+    
+        $cows = $cowsQuery->get(); // Récupérer les vaches après le filtrage
+    
+        return view('layouts.health', compact('cows', 'races'));
     }
 
 }

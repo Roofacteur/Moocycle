@@ -1,0 +1,50 @@
+#calendar {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 20px;
+}
+
+.calendar-grid {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 10px;
+    margin-top: 10px;
+    padding: 10px;
+}
+
+.calendar-day {
+    border: 1px solid #ccc;
+    padding: 10px;
+    text-align: center;
+    cursor: pointer;
+}
+
+.calendar-day span {
+    font-size: 16px;
+    display: block;
+}
+
+.heat-prediction {
+    background-color: #ffcc00;
+    color: white;
+    margin-top: 5px;
+    padding: 2px;
+    font-size: 12px;
+    border-radius: 3px;
+}
+
+#calendar-controls {
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+#calendar-controls button {
+    padding: 10px;
+    margin: 5px;
+    cursor: pointer;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+}

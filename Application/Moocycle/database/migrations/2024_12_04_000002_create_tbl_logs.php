@@ -6,18 +6,17 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
-    /**
+    /*
      * Run the migrations.
      */
     public function up(): void
     {
         Schema::create('tbl_logs', function (Blueprint $table) {
             $table->increments('num_tblLog'); // Clé primaire
-            $table->integer('num_tblVache')->unsigned(); // Référence vers tbl_vaches
-            $table->date('date_evenement'); // Date de l'événement (chaleur, insémination, etc.)
-            $table->boolean('insemination')->default(false); // Indique si c'est une insémination
-
-            $table->foreign('num_tblVache')->references('num_tblVache')->on('tbl_vaches')->onDelete('cascade');
+            $table->date('date'); // Champ DATE
+            $table->boolean('insemination'); // Champ BOOL pour l'insemination
+            $table->unsignedInteger('num_tblVache'); // Clé étrangère
+            $table->foreign('num_tblVache')->references('num_tblVache')->on('tbl_vaches')->onDelete('cascade'); // Définir la clé étrangère et la contrainte de suppression
         });
     }
 

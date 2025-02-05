@@ -3,7 +3,6 @@
     position: absolute;
     top: 113px;   /* Espace depuis le haut de la fenêtre */
     left: 380px;  /* Espace depuis la gauche de la fenêtre */
-    z-index: 100; /* S'assurer que le bouton reste au-dessus du contenu */
 }
 
 /* Style du bouton retour */

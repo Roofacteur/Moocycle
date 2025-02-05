@@ -90,7 +90,12 @@ body {
     }
 }
 /* Bouton blueviolet pour les liens <a> */
-.modify-button {
+
+.action-buttons {
+    display: flex;
+    flex-direction: row;
+}
+.action-button {
     display: inline-block;
     background: blueviolet;
     max-width:fit-content;
@@ -101,15 +106,16 @@ body {
     text-decoration: none;
     border-radius: 8px;
     transition: background 0.3s ease, transform 0.2s ease;
+    margin-left : 10px;
 }
 
 /* Effet au survol */
-.modify-button:hover {
+.action-button:hover {
     background: rgb(120, 40, 200);
     transform: scale(1.05);
 }
 
 /* Effet au clic */
-.modify-button:active {
+.action-button:active {
     transform: scale(0.95);
 }

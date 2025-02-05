@@ -15,9 +15,6 @@ Route::get('/cows', [CowController::class, 'get'])->name('cows.get');
 // Route pour filtrer les vaches par race
 Route::get('/cows/filter', [CowController::class, 'filter'])->name('cows.filter');
 
-// Route pour afficher la moyenne des cycles d'une vache spécifique
-Route::get('/cows/{num_tblVache}/average', [CowController::class, 'average'])->name('cows.average');
-
 // Route pour supprimer une vache
 Route::delete('/cows/{num_tblVache}', [CowController::class, 'destroy'])->name('deletecows');
 
@@ -40,9 +37,14 @@ Route::get('/calendar', function () {
     return view('layouts.calendar');
 })->name('calendar');
 
+Route::get('/calendar', [CowController::class, 'calendar'])->name('calendar');
+
+
 Route::get('/health', function () {
     return view('layouts.health');
 })->name('health');
+// Route pour afficher les vaches et le bouton de chaleur
+Route::get('/health', [CowController::class, 'health'])->name('health');
 
 Route::get('/tips', function () {
     return view('layouts.tips');

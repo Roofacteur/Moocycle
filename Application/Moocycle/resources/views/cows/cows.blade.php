@@ -42,9 +42,6 @@
                     data-delete-href="{{ route('deletecows', ['num_tblVache' => $cow->num_tblVache]) }}"
                     data-cow-name="{{ $cow->nom }}">
                     <a href="{{ route('readcows', ['num_tblVache' => $cow->num_tblVache]) }}" style="text-decoration: none; color: inherit; display: block; height: 100%; width: 100%;">
-                    <button class="delete-btn" data-delete-href="{{ route('deletecows', ['num_tblVache' => $cow->num_tblVache]) }}" data-cow-name="{{ $cow->nom }}">
-                        ✖
-                    </button>
                         <div id="enhancedText"><span><p>{{ $cow->nom }}</p></span></div>
                         <div><span>Collier : {{ $cow->numero_collier }}</span></div>
                         <div><span>Numéro : {{ $cow->numero_oreille }}</span></div>
@@ -63,18 +60,7 @@
         <a href="{{ route('addcows.form') }}" class="fab" aria-label="Ajouter une vache">
             +
         </a>
-    <div id="custom-dialog" class="dialog-overlay" style="display: none;">
-        <div class="dialog-box">
-            <h3 id="dialog-title">Confirmation</h3>
-            <p id="dialog-message">Voulez-vous vraiment supprimer cette vache ?</p>
-            <div class="dialog-buttons">
-            <a href="http://moocycle.test/cows">
-                <button id="dialog-confirm">Oui</button>
-            </a>
-                <button id="dialog-cancel">Non</button>
-            </div>
-        </div>
-    </div>
+    
     @endsection
 <footer>
 </footer>
