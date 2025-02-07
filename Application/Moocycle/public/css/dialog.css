@@ -44,19 +44,25 @@
 
 /* Styles pour le bouton de confirmation */
 #dialog-confirm {
-    background: blueviolet;
+    background: linear-gradient(135deg, #6a5acd, #8a2be2);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1); /* Ombre subtile pour un effet flottant */
     color: white;
 }
 #dialog-confirm:hover {
-    background: rgb(110, 34, 180);
+    transform: scale(1.1);  /* Agrandissement lors du survol */
+    background: linear-gradient(135deg, #8a2be2, #6a5acd); /* Inverse le dégradé pour l'effet hover */
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2); /* Ombre plus marquée au survol */
 }
 
 /* Styles pour le bouton de cancel */
 #dialog-cancel {
     background: white;
     color: black;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1); /* Ombre subtile pour un effet flottant */
     border: 1px solid #ddd; /* Ajout d'une bordure pour plus de consistance */
 }
 #dialog-cancel:hover {
     background: #dddddd;
+    transform: scale(1.1);  /* Agrandissement lors du survol */
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2); /* Ombre plus marquée au survol */
 }

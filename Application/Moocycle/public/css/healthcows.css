@@ -94,34 +94,6 @@ body {
     font-size: 30px;
 }
 
-/* Style pour le bouton + */
-.fab {
-    position: fixed;
-    bottom: 80px; /* Positionné à 20px du bas */
-    right: 30px; /* Positionné à 20px de la droite */
-    width: 80px; /* Largeur du bouton */
-    height: 80px; /* Hauteur du bouton */
-    background: linear-gradient(135deg, #6a5acd, #8a2be2);
-    color: white; /* Couleur du texte */
-    border: none;
-    border-radius: 50%; /* Forme ronde */
-    font-size: 50px; /* Taille du "+" */
-    text-decoration: none;
-    display: flex;
-    align-items: center; /* Centrer le contenu verticalement */
-    justify-content: center; /* Centrer le contenu horizontalement */
-    cursor: pointer; /* Curseur pointer */
-    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1); /* Ombre subtile pour un effet flottant */
-    transition: background-color 0.3s ease; /* Transition pour la couleur */
-}
-
-/* Effet au survol */
-.fab:hover {
-    transform: scale(1.1);  /* Agrandissement lors du survol */
-    background: linear-gradient(135deg, #8a2be2, #6a5acd); /* Inverse le dégradé pour l'effet hover */
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2); /* Ombre plus marquée au survol */
-}
-
 /* Supprime la décoration des liens */
 .content ul li a {
     text-decoration: none;
@@ -152,6 +124,47 @@ body {
 .content ul li:hover {
     transform: translateY(-5px);
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+.cow-buttons {
+    display: flex; /* Utilise Flexbox pour aligner les boutons */
+    gap: 10px; /* Espacement entre les boutons */
+    margin-top: 10px; /* Marge au-dessus des boutons */
+}
+
+#lactation-btn{
+    background: linear-gradient(135deg, #ffffff, #dadbc1);
+    color: black; /* Couleur du texte */
+    font-size: 14px; /* Taille de la police */
+    padding: 8px 16px; /* Espacement interne */
+    border: none; /* Retire la bordure par défaut */
+    border-radius: 5px; /* Coins arrondis */
+    cursor: pointer; /* Change le curseur pour indiquer un bouton cliquable */
+    transition: background-color 0.3s ease; /* Transition pour un effet au survol */
+}
+
+#chaleur-btn {
+    background: linear-gradient(135deg, #ff9100, #e30000);
+    color: white; /* Couleur du texte */
+    font-size: 14px; /* Taille de la police */
+    padding: 8px 16px; /* Espacement interne */
+    border: none; /* Retire la bordure par défaut */
+    border-radius: 5px; /* Coins arrondis */
+    cursor: pointer; /* Change le curseur pour indiquer un bouton cliquable */
+    transition: background-color 0.3s ease; /* Transition pour un effet au survol */
+}
+#lactation-btn:hover{
+    transition: 0.3s;
+    transform: scale(1.01);  /* Agrandissement lors du survol */
+    box-shadow: 0 10px 30px rgba(255, 255, 255, 0.518); /* Ombre plus marquée au survol */
+}
+#chaleur-btn:hover {
+    transition: 0.3s;
+    transform: scale(1.01);  /* Agrandissement lors du survol */
+    box-shadow: 0 10px 30px rgba(255, 55, 0, 0.518); /* Ombre plus marquée au survol */
+}
+
+#lactation-btn:focus, #chaleur-btn:focus {
+    outline: none; /* Retire la bordure par défaut quand le bouton est focus */
 }
 /* Pour les écrans petits et tablettes */
 @media (max-width: 1024px) {

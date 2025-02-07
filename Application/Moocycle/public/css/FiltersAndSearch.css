@@ -1,6 +1,7 @@
 .btns {
     padding: 5px 10px;
-    background-color: blueviolet;
+    background: linear-gradient(135deg, #6a5acd, #8a2be2);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1); /* Ombre subtile pour un effet flottant */
     color: white;
     border: none;
     border-radius: 5px;
@@ -10,10 +11,14 @@
     transition: opacity 0.3s ease;
 }
 .action-btn:hover {
-    background-color: blueviolet;
+    transform: scale(1.1);  /* Agrandissement lors du survol */
+    background: linear-gradient(135deg, #8a2be2, #6a5acd); /* Inverse le dégradé pour l'effet hover */
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2); /* Ombre plus marquée au survol */
 }
 .btns:hover {
-    background-color: rgb(111, 35, 182);
+    transform: scale(1.1);  /* Agrandissement lors du survol */
+    background: linear-gradient(135deg, #8a2be2, #6a5acd); /* Inverse le dégradé pour l'effet hover */
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2); /* Ombre plus marquée au survol */
 }
 
 /* Style pour la zone de filtre */

@@ -1,49 +1,77 @@
 /* Conteneur du bouton retour, positionné en haut à gauche */
 .button-container {
-    position: absolute;
-    top: 113px;   /* Espace depuis le haut de la fenêtre */
-    left: 380px;  /* Espace depuis la gauche de la fenêtre */
+    position: fixed; /* Fixe le bouton en haut à gauche de la fenêtre */
+    top: 20px;   /* Espace depuis le haut de la fenêtre */
+    left: 20px;  /* Espace depuis la gauche de la fenêtre */
+    z-index: 1000; /* Assure que le bouton reste au-dessus du contenu */
 }
 
 /* Style du bouton retour */
 .back-button {
     display: inline-block;
-    background: white;
-    color: blueviolet;  /* Couleur du texte */
-    padding: 12px 20px;
-    font-size: 30px;
+    background: linear-gradient(135deg, #6a5acd, #8a2be2); /* Dégradé moderne */
+    color: white;  /* Couleur du texte */
+    padding: 14px 22px;
+    font-size: 1.6rem; /* Taille du texte ajustée */
     text-decoration: none;
     font-weight: bold;
-    border: 3px solid blueviolet; /* Bordure bleu violet */
-    border-width: 5.5px 0px 0px 0px;
-    border-radius: 16px;  /* Bordure arrondie comme .content */
+    border-radius: 12px; /* Bordure arrondie */
+    border: none;  /* Supprime la bordure par défaut */
     cursor: pointer;
-    transition: background 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;  /* Ajout de l'ombre en transition */
-    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15); /* Ombre pour imiter .content */
-    animation: slideIn 0.6s ease-in-out;  /* Effet d'animation */
-    margin-bottom: 20px;  /* Même espacement que .content */
+    transition: transform 0.2s ease, box-shadow 0.3s ease, background 0.4s ease; /* Effet de transition */
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1); /* Ombre subtile pour un effet flottant */
+    animation: slideIn 0.6s ease-in-out;  /* Animation d'apparition */
 }
 
 /* Effet au survol */
 .back-button:hover {
-    transform: scale(1.05);
-    box-shadow: 0 6px 30px rgba(0, 0, 0, 0.2); /* Ombre plus marquée */
+    transform: scale(1.1);  /* Agrandissement lors du survol */
+    background: linear-gradient(135deg, #8a2be2, #6a5acd); /* Inverse le dégradé pour l'effet hover */
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2); /* Ombre plus marquée au survol */
 }
 
 /* Effet lors de l'activation du bouton */
 .back-button:active {
-    transform: scale(0.95);
-    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1); /* Ombre légèrement réduite lors du clic */
+    transform: scale(0.95); /* Réduit légèrement la taille du bouton au clic */
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1); /* Ombre plus petite au clic */
 }
 
 /* Animation de type "slideIn" pour faire glisser le bouton */
 @keyframes slideIn {
     0% {
         opacity: 0;
-        transform: translateX(-20px);
+        transform: translateY(-20px);
     }
     100% {
         opacity: 1;
-        transform: translateX(0);
+        transform: translateY(0);
+    }
+}
+
+/* ---- Media Queries ---- */
+
+/* Pour les petits écrans (tablettes et plus petits) */
+@media (max-width: 768px) {
+    .button-container {
+        top: 10px; /* Ajuste l'espace par rapport au haut de l'écran */
+        left: 10px; /* Ajuste l'espace par rapport à la gauche de l'écran */
+    }
+
+    .back-button {
+        font-size: 1.4rem; /* Réduit la taille du texte */
+        padding: 12px 20px; /* Réduit légèrement le padding */
+    }
+}
+
+/* Pour les très petits écrans (smartphones) */
+@media (max-width: 480px) {
+    .button-container {
+        top: 5px; /* Réduit encore l'espace par rapport au haut de l'écran */
+        left: 5px; /* Réduit encore l'espace par rapport à la gauche de l'écran */
+    }
+
+    .back-button {
+        font-size: 1.2rem; /* Réduit la taille du texte pour les petits écrans */
+        padding: 8px 16px; /* Réduit le padding pour les petits écrans */
     }
 }

@@ -2,6 +2,7 @@
 
 @section('head')
     <link rel="stylesheet" href="{{ asset('css/cows.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/dialog.css') }}">
     <script type="module" src="{{ asset ('/js/javascript.js') }}" defer></script>
 @endsection
 
@@ -45,12 +46,9 @@
                         <div id="enhancedText"><span><p>{{ $cow->nom }}</p></span></div>
                         <div><span>Collier : {{ $cow->numero_collier }}</span></div>
                         <div><span>Numéro : {{ $cow->numero_oreille }}</span></div>
-                        <div><span>Race :</span> 
-                            <p>
-                                @foreach($cow->races as $race)
-                                    {{ $race->nom }}
-                                @endforeach
-                            </p>
+                        <div><span>Race :   @foreach($cow->races as $race)
+                                                {{ $race->nom }}
+                                            @endforeach</span> 
                         </div>
                     </a>
                 </li>

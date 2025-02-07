@@ -10,7 +10,9 @@
     padding: 0;
     box-sizing: border-box;
 }
-
+.ham-menu {
+    display: none;
+}
 body {
     font-family: 'Dolphin-Sans';
     background: #f9f9f9;
@@ -22,21 +24,6 @@ body {
     min-height: 100vh;
     padding: 20px;
     width: 100%; /* Ajoutez cette propriété pour permettre la pleine largeur */
-}
-
-/* En-tête */
-.header-title {
-    width: 100%;
-    min-width: 800px;
-    text-align: center;
-    background: rgb(155, 41, 255);
-    color: white;
-    padding: 20px;
-    border-radius: 12px;
-    margin-bottom: 40px;
-    font-size: 1.8rem;
-    font-weight: bold;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
 }
 
 /* Conteneur principal des informations */
@@ -52,8 +39,10 @@ body {
     box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
     animation: slideIn 0.6s ease-in-out;
     border-top: 6px solid rgb(155, 41, 255);
-    margin-bottom: 20px;
+    margin-top: 100px;
+    text-align: left;
 }
+
 /* Pour les informations de la date des chaleurs */
 .date-chaleurs {
     display: flex;
@@ -69,14 +58,14 @@ body {
 .content div span {
     font-weight: bold;
     color: rgb(155, 41, 255);
-    font-size: 30px;
+    font-size: 20px;
 }
 
 /* Pour les paragraphes affichant des informations détaillées */
 .content div p {
     margin: 0;
     color: #333;
-    font-size: 20px;
+    font-size: 30px;
 }
 /* Animation subtile */
 @keyframes slideIn {
@@ -97,7 +86,8 @@ body {
 }
 .action-button {
     display: inline-block;
-    background: blueviolet;
+    background: linear-gradient(135deg, #6a5acd, #8a2be2);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1); /* Ombre subtile pour un effet flottant */
     max-width:fit-content;
     color: white;
     padding: 12px 20px;
@@ -111,11 +101,115 @@ body {
 
 /* Effet au survol */
 .action-button:hover {
-    background: rgb(120, 40, 200);
-    transform: scale(1.05);
+    
+    transform: scale(1.1);  /* Agrandissement lors du survol */
+    background: linear-gradient(135deg, #8a2be2, #6a5acd); /* Inverse le dégradé pour l'effet hover */
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2); /* Ombre plus marquée au survol */
 }
 
 /* Effet au clic */
 .action-button:active {
     transform: scale(0.95);
+}
+/* ---- Media Queries ---- */
+
+/* Pour les écrans petits et tablettes */
+@media (max-width: 1024px) {
+    .header-title {
+        min-width: 600px; /* Réduit la taille de l'en-tête */
+        font-size: 1.5rem; /* Réduit la taille du titre */
+    }
+
+    .content {
+        min-width: 900px; /* Réduit la largeur du contenu */
+        padding: 20px; /* Réduit le padding */
+    }
+
+    .content div span {
+        font-size: 18px; /* Réduit la taille des span */
+    }
+
+    .content div p {
+        font-size: 25px; /* Réduit la taille du texte des paragraphes */
+    }
+
+    .action-button {
+        padding: 10px 18px; /* Réduit la taille du bouton */
+        font-size: 16px; /* Réduit la taille du texte du bouton */
+    }
+}
+
+/* Pour les écrans de taille moyenne, comme les tablettes en mode portrait */
+@media (max-width: 768px) {
+    .header-title {
+        font-size: 1.2rem; /* Réduit encore la taille du titre */
+    }
+
+    .content {
+        min-width: 100%; /* Laisse toute la largeur disponible */
+        flex-direction: column; /* Passe à une disposition verticale */
+        padding: 15px; /* Réduit le padding */
+    }
+
+    .content div span {
+        font-size: 16px; /* Réduit la taille des span */
+    }
+
+    .content div p {
+        font-size: 22px; /* Réduit la taille du texte des paragraphes */
+    }
+
+    .action-button {
+        padding: 8px 16px; /* Réduit la taille du bouton */
+        font-size: 14px; /* Réduit la taille du texte du bouton */
+    }
+}
+
+/* Pour les petits écrans (smartphones) */
+@media (max-width: 480px) {
+    .header-title {
+        font-size: 1rem; /* Très petite taille de titre */
+        padding: 15px; /* Réduit le padding */
+    }
+
+    .content {
+        padding: 10px; /* Réduit encore le padding */
+    }
+
+    .content div span {
+        font-size: 14px; /* Réduit la taille des span */
+    }
+
+    .content div p {
+        font-size: 18px; /* Réduit la taille du texte des paragraphes */
+    }
+
+    .action-button {
+        padding: 6px 12px; /* Réduit la taille du bouton */
+        font-size: 12px; /* Réduit la taille du texte du bouton */
+    }
+}
+
+/* Réactivité sur très petits écrans */
+@media (max-width: 360px) {
+    .header-title {
+        font-size: 0.9rem; /* Réduit encore plus la taille du titre */
+    }
+
+    .content {
+        padding: 5px; /* Réduit le padding */
+    }
+
+    .content div span {
+        font-size: 16px; /* Réduit la taille des span */
+    }
+
+    .content div p {
+        font-size: 12px; /* Réduit la taille du texte des paragraphes */
+    }
+
+    .action-button {
+        padding: 5px 10px; /* Réduit encore la taille du bouton */
+        font-size: 10px; /* Réduit la taille du texte du bouton */
+    }
 }

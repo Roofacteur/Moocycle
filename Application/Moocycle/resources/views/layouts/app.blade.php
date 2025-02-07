@@ -8,8 +8,7 @@
     <script type="module" src="{{ asset ('/js/filters.js') }}" defer></script>
     <link rel="stylesheet" href="{{ asset('css/home.css') }}">
     <link rel="stylesheet" href="{{ asset('css/burger.css') }}">
-    <link rel="stylesheet" href="{{ asset('css/cows.css') }}">
-    <link rel="stylesheet" href="{{ asset('css/dialog.css') }}">
+
     <link rel="stylesheet" href="{{ asset('css/FiltersAndSearch.css') }}">
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>Moocycle</title>

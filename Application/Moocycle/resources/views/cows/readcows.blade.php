@@ -12,9 +12,6 @@
         <a class="back-button" href="{{ route('cows.get') }}">⬅</a>
     </div>
     @section('header')
-    <div class="header-title">
-            Infos de : <span>{{ $cow->nom }}</span>
-    </div>
     @endsection
     @section('content')
     <div><span>Nom<p>{{ $cow->nom }}</p></span></div>
@@ -26,14 +23,14 @@
         </p>
         </span>
     </div>
-    <div><span>Naissance<p>{{ $cow->date_naissance }}</p></span></div>
-    <div><span>Collier<p>{{ $cow->numero_collier }}</p></span></div>
-    <div><span>Numéro d'oreille<p>{{ $cow->numero_oreille }}</p></span></div>
-    <div><span>Nombre de lactation<p>{{ $cow->nombre_lactation }}</p></span></div>
+    <div><span>Naissance<p class = "cow-data">{{ $cow->date_naissance }}</p></span></div>
+    <div><span>Collier<p class = "cow-data">{{ $cow->numero_collier }}</p></span></div>
+    <div><span>Numéro d'oreille<p class = "cow-data">{{ $cow->numero_oreille }}</p></span></div>
+    <div><span>Nombre de lactation<p class = "cow-data">{{ $cow->nombre_lactation }}</p></span></div>
     <div class="date-chaleurs">
-        <div><span>Date prochaine chaleur<p>{{ $cow->date_prochaine_chaleur }}</p></span></div>
+        <div><span>Date prochaine chaleur<p class = "cow-data">{{ $cow->date_prochaine_chaleur }}</p></span></div>
         <div class="average-cycle">
-            <div><span>Moyenne (jours) entre les chaleurs<p>{{ $average }} jours</p></span></div>
+            <div><span>Moyenne (jours) entre les chaleurs<p class = "cow-data">{{ $average }} jours</p></span></div>
         </div>
     </div>
     
