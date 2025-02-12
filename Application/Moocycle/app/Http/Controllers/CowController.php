@@ -89,7 +89,7 @@ class CowController extends Controller
 
         // Si moins de deux dates, retourner 20 jours par défaut
         if (count($dates) < 2) {
-            $average = 20.0;
+            $average = 21.0 *-1;
         } else {
             $intervals = [];
             for ($i = 1; $i < count($dates); $i++) {
@@ -105,11 +105,24 @@ class CowController extends Controller
         return view('cows.readcows', [
             'cow' => $cow,
             'currentRace' => $currentRace,
-            'average' => round($average, 2) // Arrondi à 2 décimales
+            'average' => round($average *-1, 2) // Arrondi à 2 décimales
         ]);
     }
 
+    public function incrementLactation($id)
+    {
+        $vache = Vache::find($id);
 
+        if (!$vache) {
+            return response()->json(['success' => false, 'message' => 'Vache introuvable.'], 404);
+        }
+
+        $vache->nombre_lactation = ($vache->nombre_lactation ?? 0) + 1;
+        $vache->save();
+
+        return response()->json(['success' => true, 'new_lactation' => $vache->nombre_lactation]);
+    }
+    
     // Méthode pour filtrer (en fait, on réutilise get)
     public function filter(Request $request)
     {
@@ -181,7 +194,7 @@ class CowController extends Controller
 
         // Si moins de deux dates, retourner 20 jours par défaut
         if (count($dates) < 2) {
-            $average = 20.0;
+            $average = 21.0;
         } else {
             $intervals = [];
             for ($i = 1; $i < count($dates); $i++) {

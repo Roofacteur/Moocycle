@@ -46,6 +46,8 @@ Route::get('/health', function () {
 // Route pour afficher les vaches et le bouton de chaleur
 Route::get('/health', [CowController::class, 'health'])->name('health');
 
+Route::post('/health/increment-lactation/{id}', [CowController::class, 'incrementLactation']);
+
 Route::get('/tips', function () {
     return view('layouts.tips');
 })->name('tips');

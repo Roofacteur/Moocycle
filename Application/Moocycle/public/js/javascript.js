@@ -91,6 +91,47 @@ document.addEventListener('DOMContentLoaded', function() {
             customDialog.style.display = 'flex';
         }
     });
+    document.body.addEventListener('click', function (event) {
+        if (event.target && event.target.matches('.lactation-btn')) {
+            event.preventDefault(); // Empêcher la redirection immédiate
+            
+            const listItem = event.target.closest('li');
+            const cowId = listItem.getAttribute('data-cow-id');
+            const cowName = listItem.getAttribute('data-cow-name');
+            let nbOfLactation = parseInt(listItem.getAttribute('data-cow-lactation'));
+    
+            dialogMessage.textContent = `Voulez-vous vraiment ajouter une lactation à ${cowName} ? \n Nombre de lactation actuel : ${nbOfLactation}`;
+            customDialog.style.display = 'flex';
+    
+            confirmButton.onclick = function () {
+                fetch(`/increment-lactation/${cowId}`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+                    }
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        nbOfLactation += 1;
+                        listItem.setAttribute('data-cow-lactation', nbOfLactation);
+                        alert(`Lactation ajoutée à ${cowName}. Nouveau nombre : ${nbOfLactation}`);
+                    } else {
+                        alert("Erreur lors de l'ajout de la lactation.");
+                    }
+                    customDialog.style.display = 'none';
+                })
+                .catch(error => console.error("Erreur AJAX :", error));
+            };
+        }
+    
+        if (event.target && event.target.id === 'dialog-cancel') {
+            customDialog.style.display = 'none';
+        }
+    });
+    
+   
 
     confirmButton.addEventListener('click', function () {
         if (!deleteUrl) return;
