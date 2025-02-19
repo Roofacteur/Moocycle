@@ -111,16 +111,15 @@ class CowController extends Controller
 
     public function incrementLactation($id)
     {
-        $vache = Vache::find($id);
+        $cow = Cow::find($id);
 
-        if (!$vache) {
+        if (!$cow) {
             return response()->json(['success' => false, 'message' => 'Vache introuvable.'], 404);
         }
+        $cow->nombre_lactation ++;
+        $cow->save();
 
-        $vache->nombre_lactation = ($vache->nombre_lactation ?? 0) + 1;
-        $vache->save();
-
-        return response()->json(['success' => true, 'new_lactation' => $vache->nombre_lactation]);
+        return redirect()->route('health')->with('success', 'Lactation mise à jour avec succès.');
     }
     
     // Méthode pour filtrer (en fait, on réutilise get)

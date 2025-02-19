@@ -33,36 +33,26 @@
     gap: 10px; /* Espacement entre les boutons */
     margin-top: 20px; /* Espacement supplémentaire en haut */
 }
-
-/* Boutons dans la boîte de dialogue */
-.dialog-buttons button {
+/* Styles pour les boutons de dialogue */
+#dialog-confirm,
+#dialog-cancel {
+    background: linear-gradient(135deg, #6a5acd, #8a2be2);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1); /* Ombre subtile pour un effet flottant */
+    color: white;
     padding: 12px 25px; /* Assurer la même taille des boutons */
     border-radius: 5px;
     cursor: pointer;
     font-size: 1rem; /* Taille du texte des boutons */
+    box-sizing: border-box; /* Inclure padding et bordure dans la taille totale */
+    display: flex; /* Utiliser flexbox pour centrer le contenu */
+    align-items: center; /* Alignement vertical centré */
+    height: 50px; /* Assurez-vous que les deux boutons ont la même hauteur */
 }
 
-/* Styles pour le bouton de confirmation */
-#dialog-confirm {
-    background: linear-gradient(135deg, #6a5acd, #8a2be2);
-    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1); /* Ombre subtile pour un effet flottant */
-    color: white;
-}
-#dialog-confirm:hover {
+/* Effets au survol */
+#dialog-confirm:hover,
+#dialog-cancel:hover {
     transform: scale(1.1);  /* Agrandissement lors du survol */
     background: linear-gradient(135deg, #8a2be2, #6a5acd); /* Inverse le dégradé pour l'effet hover */
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2); /* Ombre plus marquée au survol */
-}
-
-/* Styles pour le bouton de cancel */
-#dialog-cancel {
-    background: white;
-    color: black;
-    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1); /* Ombre subtile pour un effet flottant */
-    border: 1px solid #ddd; /* Ajout d'une bordure pour plus de consistance */
-}
-#dialog-cancel:hover {
-    background: #dddddd;
-    transform: scale(1.1);  /* Agrandissement lors du survol */
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2); /* Ombre plus marquée au survol */
 }

@@ -39,14 +39,10 @@ Route::get('/calendar', function () {
 
 Route::get('/calendar', [CowController::class, 'calendar'])->name('calendar');
 
-
-Route::get('/health', function () {
-    return view('layouts.health');
-})->name('health');
 // Route pour afficher les vaches et le bouton de chaleur
 Route::get('/health', [CowController::class, 'health'])->name('health');
 
-Route::post('/health/increment-lactation/{id}', [CowController::class, 'incrementLactation']);
+Route::post('/health/increment-lactation/{num_tblVache}', [CowController::class, 'incrementLactation'])->name('increment.lactation');
 
 Route::get('/tips', function () {
     return view('layouts.tips');

@@ -1,14 +1,13 @@
 document.addEventListener('DOMContentLoaded', function() {
-    var customDialog = document.getElementById('custom-dialog');
-    var dialogConfirm = document.getElementById('dialog-confirm');
-    var dialogCancel = document.getElementById('dialog-cancel');
-    var dialogTitle = document.getElementById('dialog-title');
-    var dialogMessage = document.getElementById('dialog-message');
-    const confirmButton = document.getElementById('dialog-confirm');
-    const cancelButton = document.getElementById('dialog-cancel');
-    const hamMenu = document.querySelector('.ham-menu');
-    const offScreenMenu = document.querySelector('.off-screen-menu');
-    const overlay = document.querySelector(".menu-overlay");    
+    let confirmButton = document.getElementById('dialog-confirm');
+    let dialogCancel = document.getElementById('dialog-cancel');
+    let dialogTitle = document.getElementById('dialog-title');
+    let customDialog = document.getElementById('custom-dialog');
+    let cancelButton = document.getElementById('dialog-cancel');
+    let dialogMessage = document.getElementById('dialog-message');
+    let hamMenu = document.querySelector('.ham-menu');
+    let offScreenMenu = document.querySelector('.off-screen-menu');
+    let overlay = document.querySelector(".menu-overlay");    
     let deleteUrl = '';
 
     if (hamMenu && offScreenMenu && overlay) {
@@ -25,8 +24,8 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
-    if (dialogConfirm) {
-        dialogConfirm.addEventListener('click', function() {
+    if (confirmButton) {
+        confirmButton.addEventListener('click', function() {
             if (typeof deleteForm !== "undefined" && deleteForm) {
                 deleteForm.submit();
             }
@@ -41,11 +40,11 @@ document.addEventListener('DOMContentLoaded', function() {
 
     if (cancelButton) {
         cancelButton.addEventListener('click', function(event) {
-            var form = document.querySelector('form');
+            let form = document.querySelector('form');
             if (!form) return;
 
-            var inputs = form.querySelectorAll('input, select');
-            var isDirty = false;
+            let inputs = form.querySelectorAll('input, select');
+            let isDirty = false;
 
             inputs.forEach(function(input) {
                 if (input.tagName === 'SELECT') {
@@ -70,7 +69,7 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
-    var selects = document.querySelectorAll('select');
+    let selects = document.querySelectorAll('select');
     selects.forEach(function(select) {
         select.setAttribute('data-default', select.value);
     });
@@ -96,43 +95,19 @@ document.addEventListener('DOMContentLoaded', function() {
             event.preventDefault(); // Empêcher la redirection immédiate
             
             const listItem = event.target.closest('li');
-            const cowId = listItem.getAttribute('data-cow-id');
-            const cowName = listItem.getAttribute('data-cow-name');
             let nbOfLactation = parseInt(listItem.getAttribute('data-cow-lactation'));
+            let cowId = event.target.getAttribute('data-cow-id'); // Récupérer l'ID de la vache
     
-            dialogMessage.textContent = `Voulez-vous vraiment ajouter une lactation à ${cowName} ? \n Nombre de lactation actuel : ${nbOfLactation}`;
+            dialogMessage.textContent = `Ajouter une lactation ? Nombre de lactation actuel : ${nbOfLactation}`;
             customDialog.style.display = 'flex';
     
-            confirmButton.onclick = function () {
-                fetch(`/increment-lactation/${cowId}`, {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
-                    }
-                })
-                .then(response => response.json())
-                .then(data => {
-                    if (data.success) {
-                        nbOfLactation += 1;
-                        listItem.setAttribute('data-cow-lactation', nbOfLactation);
-                        alert(`Lactation ajoutée à ${cowName}. Nouveau nombre : ${nbOfLactation}`);
-                    } else {
-                        alert("Erreur lors de l'ajout de la lactation.");
-                    }
-                    customDialog.style.display = 'none';
-                })
-                .catch(error => console.error("Erreur AJAX :", error));
-            };
-        }
-    
-        if (event.target && event.target.id === 'dialog-cancel') {
-            customDialog.style.display = 'none';
+            // Mettre à jour l'action du formulaire avec l'ID de la vache
+            const form = customDialog.querySelector('form');
+            form.action = form.action.replace(/\/\d+$/, '/' + cowId); // Remplacer l'ID dans l'URL
         }
     });
     
-   
-
+    
     confirmButton.addEventListener('click', function () {
         if (!deleteUrl) return;
 

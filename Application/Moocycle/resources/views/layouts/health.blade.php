@@ -25,7 +25,7 @@
                     <div><span>Collier : {{ $cow->numero_collier }}</span></div>
                     <div><span>Numéro : {{ $cow->numero_oreille }}</span></div>
                     <div class="cow-buttons">
-                        <button class="lactation-btn">Lactation</button>
+                        <button class="lactation-btn" data-cow-id="{{ $cow->num_tblVache }}" data-cow-lactation="{{ $cow->nombre_lactation }}">Lactation</button>
                         <button class="chaleur-btn">Chaleur</button>
                     </div>
                 </li>
@@ -36,8 +36,13 @@
                 <h3 id="dialog-title">Confirmation</h3>
                 <p id="dialog-message">Ajouter une lactation à votre vache ?</p>
                 <div class="dialog-buttons">
-                    <button id="dialog-confirm">Oui</button>
-                    <button id="dialog-cancel">Non</button>
+                    <form action="{{ route('increment.lactation', ['num_tblVache' => $cow->num_tblVache]) }}" method="POST">
+                        @csrf
+                        <button id="dialog-confirm">Oui</button>
+                    </form>
+                    <a href="{{ route('health') }}">
+                        <button id="dialog-cancel">Non</button>
+                    </a>
                 </div>
             </div>
         </div>
