@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script type="module" src="{{ asset ('/js/javascript.js') }}" defer></script>
     <script type="module" src="{{ asset ('/js/clock.js') }}" defer></script>
-    <script type="module" src="{{ asset ('/js/filters.js') }}" defer></script>
     <link rel="stylesheet" href="{{ asset('css/home.css') }}">
     <link rel="stylesheet" href="{{ asset('css/burger.css') }}">
 

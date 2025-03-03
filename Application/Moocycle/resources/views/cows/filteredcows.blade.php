@@ -18,8 +18,8 @@
         @endif
         @foreach($cows as $cow)
             <li id="cow-li" 
-                data-edit-href="{{ route('editcows', ['num_tblVache' => $cow->num_tblVache]) }}" 
-                data-delete-href="{{ route('deletecows', ['num_tblVache' => $cow->num_tblVache]) }}"
+                data-edit-href="{{ route('cows.edit', ['num_tblVache' => $cow->num_tblVache]) }}" 
+                data-delete-href="{{ route('cows.delete', ['num_tblVache' => $cow->num_tblVache]) }}"
                 data-cow-name="{{ $cow->nom }}">
                 <div id="enhancedText"><span><p>{{ $cow->nom }}</p></span></div>
                 <div><span>Collier : {{ $cow->numero_collier }}</span></div>

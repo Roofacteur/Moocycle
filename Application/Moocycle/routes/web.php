@@ -16,7 +16,7 @@ Route::get('/cows', [CowController::class, 'get'])->name('cows.get');
 Route::get('/cows/filter', [CowController::class, 'filter'])->name('cows.filter');
 
 // Route pour supprimer une vache
-Route::delete('/cows/{num_tblVache}', [CowController::class, 'destroy'])->name('deletecows');
+Route::delete('/cows/{num_tblVache}', [CowController::class, 'destroy'])->name('cows.delete');
 
 // Route pour soumettre le formulaire pour ajouter une vache
 Route::post('/cows/store', [CowController::class, 'store'])->name('addcows.store');
@@ -25,13 +25,13 @@ Route::post('/cows/store', [CowController::class, 'store'])->name('addcows.store
 Route::get('/cows/add', [CowController::class, 'create'])->name('addcows.form');
 
 // Route pour modifier une vache
-Route::put('/cows/update/{num_tblVache}', [CowController::class, 'update'])->name('updatecows');
+Route::put('/cows/update/{num_tblVache}', [CowController::class, 'update'])->name('cows.update');
 
 // Route pour afficher une vache
-Route::get('/cows/{num_tblVache}', [CowController::class, 'show'])->name('readcows');
+Route::get('/cows/{num_tblVache}', [CowController::class, 'show'])->name('cows.read');
 
 // Route pour appeler la page de modification de la vache
-Route::get('/cows/edit/{num_tblVache}', [CowController::class, 'edit'])->name('editcows');
+Route::get('/cows/edit/{num_tblVache}', [CowController::class, 'edit'])->name('cows.edit');
 
 Route::get('/calendar', function () {
     return view('layouts.calendar');
@@ -42,7 +42,7 @@ Route::get('/calendar', [CowController::class, 'calendar'])->name('calendar');
 // Route pour afficher les vaches et le bouton de chaleur
 Route::get('/health', [CowController::class, 'health'])->name('health');
 
-Route::post('/health/increment-lactation/{num_tblVache}', [CowController::class, 'incrementLactation'])->name('increment.lactation');
+Route::post('/health/{num_tblVache}/increment-lactation', [CowController::class, 'incrementLactation'])->name('incrementLactation');
 
 Route::get('/tips', function () {
     return view('layouts.tips');

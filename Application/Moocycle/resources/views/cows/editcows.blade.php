@@ -13,7 +13,7 @@
 </div>
 @endsection
 @section('content')
-<form action="{{ route('updatecows', ['num_tblVache' => $cow->num_tblVache]) }}" method="POST">
+<form action="{{ route('cows.update', ['num_tblVache' => $cow->num_tblVache]) }}" method="POST">
     @csrf
     @method('PUT')
 
@@ -49,7 +49,7 @@
         </select>
     </div>
     <button type="submit">Enregistrer</button>
-    <a href="{{ route('readcows', ['num_tblVache' => $cow->num_tblVache]) }}">
+    <a href="{{ route('cows.read', ['num_tblVache' => $cow->num_tblVache]) }}">
         <button type="button" class="cancel">Annuler</button>
     </a>
 </form>

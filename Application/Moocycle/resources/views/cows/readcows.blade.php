@@ -35,10 +35,10 @@
     </div>
     
     <div class ="action-buttons">
-        <a class="action-button" href="{{ route('editcows', ['num_tblVache' => $cow->num_tblVache]) }}">Modifier</a>
+        <a class="action-button" href="{{ route('cows.edit', ['num_tblVache' => $cow->num_tblVache]) }}">Modifier</a>
         <a class="action-button delete-btn" 
             href="#" 
-            data-delete-href="{{ route('deletecows', ['num_tblVache' => $cow->num_tblVache]) }}"
+            data-delete-href="{{ route('cows.delete', ['num_tblVache' => $cow->num_tblVache]) }}"
             data-cow-name="{{ $cow->nom }}">
             Supprimer
         </a>

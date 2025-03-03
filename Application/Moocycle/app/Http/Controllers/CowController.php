@@ -10,16 +10,19 @@ use Illuminate\Http\Request;
 
 class CowController extends Controller
 {
-    // Méthode pour supprimer une vache
-    public function destroy($num_tblVache)
+    public function index()
     {
-        // Trouver la vache avec l'identifiant unique (num_tblVache)
-        $cow = Cow::findOrFail($num_tblVache);
+        $cows = Cow::all(); // Remplace "Cow" par le bon modèle si besoin
+        return view('health', compact('cows'));
+    }
 
-        // Supprimer la vache
+    // Méthode pour supprimer une vache
+    public function destroy($id)
+    {
+        $cow = Cow::findOrFail($id);
+        $cow->races()->detach();
         $cow->delete();
 
-        // Rediriger avec un message de succès
         return redirect()->route('cows.get')->with('success', 'Vache supprimée avec succès.');
     }
 
@@ -35,9 +38,8 @@ class CowController extends Controller
 
 
     // Méthode pour mettre à jour une vache
-    public function update(Request $request, $num_tblVache)
+    public function update(Request $request, $id)
     {
-        // Validation des données
         $validated = $request->validate([
             'nom' => 'required|string|max:255',
             'numero_collier' => 'required|string|max:50',
@@ -46,18 +48,11 @@ class CowController extends Controller
             'num_tblRace' => 'required|exists:tbl_races,num_tblRace',
         ]);
 
-        // Trouver la vache par son identifiant
-        $cow = Cow::findOrFail($num_tblVache);
-
-        // Mise à jour de la vache
-        $cow->update($validated);
-
-        // Synchroniser la race
+        $cow = Cow::findOrFail($id);
+        $cow->update($request->only(['nom', 'numero_collier', 'numero_oreille']));
         $cow->races()->sync([$request->input('num_tblRace')]);
 
-        // Redirection vers la liste des vaches (route 'cows.get')
-        return redirect()->route('readcows', ['num_tblVache' => $cow->num_tblVache])
-        ->with('success', 'Vache mise à jour avec succès !');
+        return redirect()->route('cows.get')->with('success', 'Vache mise à jour avec succès.');
     }
 
     // Méthode pour récupérer les vaches avec un filtre ou non
@@ -111,41 +106,17 @@ class CowController extends Controller
 
     public function incrementLactation($id)
     {
-        $cow = Cow::find($id);
+        // Trouver la vache par son ID
+        $cow = Cow::findOrFail($id);
 
-        if (!$cow) {
-            return response()->json(['success' => false, 'message' => 'Vache introuvable.'], 404);
-        }
-        $cow->nombre_lactation ++;
-        $cow->save();
+        // Incrémenter le nombre de lactations
+        $cow->increment('nombre_lactation');
 
-        return redirect()->route('health')->with('success', 'Lactation mise à jour avec succès.');
-    }
-    
-    // Méthode pour filtrer (en fait, on réutilise get)
-    public function filter(Request $request)
-    {
-        // Récupérer toutes les races disponibles
-        $races = Race::all();
-        
-        // Créer une requête de base pour les vaches
-        $cowsQuery = Cow::query();
-        
-        // Appliquer le filtre si une race est sélectionnée
-        if ($request->has('race') && $request->race != '') {
-            $cowsQuery->whereHas('races', function($query) use ($request) {
-                $query->where('id', $request->race);
-            });
-        }
-
-        // Récupérer les vaches après le filtrage
-        $cows = $cowsQuery->get();
-        
-        // Passer les variables à la vue filteredcows
-        return view('cows.filteredcows', compact('cows', 'races'));
+        // Retourner une réponse JSON
+        return response()->json(['success' => true]);
     }
 
-     
+
     // Méthode pour afficher le formulaire d'ajout d'une nouvelle vache
     public function create()
     {
@@ -185,11 +156,12 @@ class CowController extends Controller
     public function average($idVache)
     {
         // Récupérer les logs de la vache triés par date
-        $vache = Cow::with(['logs' => function ($query) {
+        $cow = Cow::with(['logs' => function ($query) {
             $query->orderBy('date', 'asc');
         }])->findOrFail($idVache);
 
-        $dates = $vache->logs->where('insemination', false)->pluck('date');
+        // Récupérer toutes les dates de chaleurs, excluant celles où l'insémination a été effectuée
+        $dates = $cow->logs->where('insemination', false)->pluck('date');
 
         // Si moins de deux dates, retourner 20 jours par défaut
         if (count($dates) < 2) {
@@ -200,38 +172,33 @@ class CowController extends Controller
                 $intervals[] = Carbon::parse($dates[$i])->diffInDays(Carbon::parse($dates[$i - 1]));
             }
 
-            // Calculer la average
+            // Calculer la moyenne des intervalles
             $average = array_sum($intervals) / count($intervals);
         }
 
+        // Ajouter la moyenne à la dernière date de chaleur pour obtenir la prochaine chaleur
+        $lastHeatDate = Carbon::parse($dates->last());
+        $nextHeatDate = $lastHeatDate->addDays($average);
+
+        // Mettre à jour les dates dans le modèle
+        $cow->date_derniere_chaleur = $lastHeatDate->format('Y-m-d');
+        $cow->date_prochaine_chaleur = $nextHeatDate->format('Y-m-d');
+        $cow->save();
+
         return view('cows.readcows', [
-            'cow' => $vache, 
-            'average' => round($average, 2) // Arrondi à 2 décimales
+            'cow' => $cow, 
+            'average' => round($average, 2), // Arrondi à 2 décimales
+            'nextHeatDate' => $nextHeatDate->format('Y-m-d') // Format de la date de la prochaine chaleur
         ]);
     }
-    public function calendar(Request $request)
+
+    public function calendar()
     {
-        // Récupérer toutes les vaches avec leurs logs
         $cows = Cow::with(['logs' => function ($query) {
-            $query->orderBy('date', 'asc');
+            $query->orderBy('date', 'desc');
         }])->get();
 
-        // Calculer la moyenne des cycles pour chaque vache
-        $cycleAverages = [];
-        foreach ($cows as $cow) {
-            $dates = $cow->logs->where('insemination', false)->pluck('date');
-            if (count($dates) < 2) {
-                $cycleAverages[$cow->num_tblVache] = 21.0; // Valeur par défaut
-            } else {
-                $intervals = [];
-                for ($i = 1; $i < count($dates); $i++) {
-                    $intervals[] = Carbon::parse($dates[$i])->diffInDays(Carbon::parse($dates[$i - 1]));
-                }
-                $cycleAverages[$cow->num_tblVache] = array_sum($intervals) / count($intervals);
-            }
-        }
-
-        return view('layouts.calendar', compact('cycleAverages'));
+        return view('layouts.calendar', compact('cows'));
     }
     public function health(Request $request)
     {

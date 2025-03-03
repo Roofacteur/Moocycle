@@ -1,0 +1,549 @@
+Voici les tables de ma base de données :
+tbl_races
+tbl_logs
+tbl_racevache
+tbl_vaches
+
+
+
+Dans ma table "tbl_vaches" :
+
+	Schema::create('tbl_vaches', function (Blueprint $table) {
+		$table->increments('num_tblVache'); // Clé primaire
+		$table->string('nom', 50)->nullable(); // Champ VARCHAR(50) non nul
+		$table->integer('numero_collier')->nullable();
+		$table->string('numero_oreille', 50);
+		$table->date('date_prochaine_chaleur')->nullable(); // Champ DATE, nullable
+		$table->date('date_derniere_chaleur')->nullable(); // Champ DATE, nullable
+		
+		$table->date('date_insemination')->nullable(); // Champ DATE, nullable
+		$table->date('date_naissance'); // Champ DATE non nul
+		$table->integer('nombre_lactation')->nullable(); // Champ INT, nullable
+	
+Dans ma table "tbl_logs" :
+
+	Schema::create('tbl_logs', function (Blueprint $table) {
+		$table->increments('num_tblLog'); // Clé primaire
+		$table->date('date'); // Champ DATE
+		$table->boolean('insemination'); // Champ BOOL pour l'insemination
+		$table->unsignedInteger('num_tblVache'); // Clé étrangère
+		$table->foreign('num_tblVache')->references('num_tblVache')->on('tbl_vaches')->onDelete('cascade'); // Définir la clé étrangère et la contrainte de suppression
+	});
+	
+Dans ma table "tbl_races" :
+
+	Schema::create('tbl_races', function (Blueprint $table) {
+            $table->increments('num_tblRace'); // Clé primaire
+            $table->string('nom', 50); // Champ VARCHAR(50) non nul
+        });
+		
+		
+Dans ma table "tbl_raceVache" :
+	Schema::create('tbl_raceVache', function (Blueprint $table) {
+				$table->integer('num_tblVache')->unsigned(); // Référence vers tbl_vaches
+				$table->integer('num_tblRace')->unsigned(); // Référence vers tbl_races
+
+				$table->primary(['num_tblVache', 'num_tblRace']); // Clé primaire composite
+
+				$table->foreign('num_tblVache')->references('num_tblVache')->on('tbl_vaches')->onDelete('cascade');
+				$table->foreign('num_tblRace')->references('num_tblRace')->on('tbl_races')->onDelete('cascade');
+			});
+			
+
+
+Les modèles:
+
+Cow.php :
+protected $table = 'tbl_vaches';
+
+    protected $primaryKey = 'num_tblVache';
+
+    public $timestamps = false; 
+
+    // Liste des attributs modifiables
+    protected $fillable = [
+        'nom',
+        'numero_collier',
+        'numero_oreille',
+        'date_prochaine_chaleur',
+        'date_insemination',
+        'date_naissance',
+        'nombre_lactation',
+    ];
+
+    // Si tu veux ajouter des dates à l'attribut $dates (par exemple, pour le formatage)
+    protected $dates = [
+        'date_prochaine_chaleur',
+        'date_insemination',
+        'date_naissance',
+    ];
+    public function races()
+    {
+        return $this->belongsToMany(Race::class, 'tbl_raceVache', 'num_tblVache', 'num_tblRace');
+    }
+    public function logs()
+    {
+        return $this->hasMany(Log::class, 'num_tblVache', 'num_tblVache');
+    }
+	
+Race.php :
+protected $table = 'tbl_races';
+
+    // Si tu veux spécifier une clé primaire différente (par défaut, c'est 'id')
+    protected $primaryKey = 'num_tblRace';
+
+    public $timestamps = false; 
+
+    protected $fillable = ['nom'];
+
+    // Définir une relation avec le modèle Cow (si nécessaire)
+    public function cows()
+    {
+        return $this->belongsToMany(Cow::class, 'tbl_raceVache', 'num_tblRace', 'num_tblVache');
+    }
+	
+Log.php :
+protected $table = 'tbl_logs'; // Nom de la table
+    protected $primaryKey = 'num_tblLog'; // Clé primaire
+
+    public function vache()
+    {
+        return $this->belongsTo(Vache::class, 'num_tblVache', 'num_tblVache');
+    }
+	
+Et finalement mon contrôleur CowController.php :
+<?php
+
+namespace App\Http\Controllers;
+
+use App\Models\Cow;
+use App\Models\Race;
+use App\Models\Logs;
+use Carbon\Carbon;
+use Illuminate\Http\Request;
+
+class CowController extends Controller
+{
+    public function index()
+    {
+        $cows = Cow::all(); // Remplace "Cow" par le bon modèle si besoin
+        return view('health', compact('cows'));
+    }
+
+    // Méthode pour supprimer une vache
+    public function destroy($id)
+    {
+        $cow = Cow::findOrFail($id);
+        $cow->races()->detach();
+        $cow->delete();
+
+        return redirect()->route('cows.get')->with('success', 'Vache supprimée avec succès.');
+    }
+
+    // Méthode pour afficher le formulaire de modification d'une vache
+    public function edit($num_tblVache) // Utiliser num_tblVache au lieu de $id
+    {
+        $cow = Cow::findOrFail($num_tblVache); // Trouver la vache avec son ID
+        $races = Race::all(); // Récupérer toutes les races disponibles
+        $currentRace = $cow->races->first(); // Récupérer la race actuelle (si disponible)
+
+        return view('cows.editcows', compact('cow', 'races', 'currentRace')); // Passer les données à la vue
+    }
+
+
+    // Méthode pour mettre à jour une vache
+    public function update(Request $request, $id)
+    {
+        $request->validate([
+            'nom' => 'required|string|max:255',
+            'numero_collier' => 'required|integer|unique:tbl_cows,numero_collier,' . $id,
+            'numero_oreille' => 'required|integer|unique:tbl_cows,numero_oreille,' . $id,
+            'num_tblRace' => 'required|exists:tbl_races,id'
+        ]);
+
+        $cow = Cow::findOrFail($id);
+        $cow->update($request->only(['nom', 'numero_collier', 'numero_oreille']));
+        $cow->races()->sync([$request->input('num_tblRace')]);
+
+        return redirect()->route('cows.get')->with('success', 'Vache mise à jour avec succès.');
+    }
+
+    // Méthode pour récupérer les vaches avec un filtre ou non
+    public function get(Request $request)
+    {
+        $races = Race::all();
+        
+        $cowsQuery = Cow::with('races'); // Charger la relation races
+    
+        // Appliquer le filtre si une race est sélectionnée
+        if ($request->has('race') && $request->race != '') {
+            $cowsQuery->whereHas('races', function ($query) use ($request) {
+                $query->where('num_tblRace', $request->race);
+            });
+        }
+    
+        $cows = $cowsQuery->get(); // Récupérer les vaches après le filtrage
+    
+        return view('cows.cows', compact('cows', 'races'));
+    }
+    
+    public function show($id)
+    {
+        $cow = Cow::with(['logs' => function ($query) {
+            $query->orderBy('date', 'asc');
+        }])->findOrFail($id);
+
+        $dates = $cow->logs->where('insemination', false)->pluck('date');
+
+        // Si moins de deux dates, retourner 20 jours par défaut
+        if (count($dates) < 2) {
+            $average = 21.0 *-1;
+        } else {
+            $intervals = [];
+            for ($i = 1; $i < count($dates); $i++) {
+                $intervals[] = Carbon::parse($dates[$i])->diffInDays(Carbon::parse($dates[$i - 1]));
+            }
+
+            // Calculer la moyenne
+            $average = array_sum($intervals) / count($intervals);
+        }
+
+        $currentRace = $cow->races->first(); // Récupérer la première race associée
+
+        return view('cows.readcows', [
+            'cow' => $cow,
+            'currentRace' => $currentRace,
+            'average' => round($average *-1, 2) // Arrondi à 2 décimales
+        ]);
+    }
+
+    public function incrementLactation($id)
+    {
+        $cow = Cow::findOrFail($id);
+        $cow->increment('nombre_lactation');
+        return redirect()->back()->with('success', 'Lactation augmentée.');
+    }
+    
+    // Méthode pour filtrer (en fait, on réutilise get)
+    public function filter(Request $request)
+    {
+        // Récupérer toutes les races disponibles
+        $races = Race::all();
+        
+        // Créer une requête de base pour les vaches
+        $cowsQuery = Cow::query();
+        
+        // Appliquer le filtre si une race est sélectionnée
+        if ($request->has('race') && $request->race != '') {
+            $cowsQuery->whereHas('races', function($query) use ($request) {
+                $query->where('id', $request->race);
+            });
+        }
+
+        // Récupérer les vaches après le filtrage
+        $cows = $cowsQuery->get();
+        
+        // Passer les variables à la vue filteredcows
+        return view('cows.filteredcows', compact('cows', 'races'));
+    }
+
+     
+    // Méthode pour afficher le formulaire d'ajout d'une nouvelle vache
+    public function create()
+    {
+        $races = Race::all(); // Récupère toutes les races disponibles
+        return view('cows.addcows', compact('races')); // Passe les races à la vue
+    }    
+
+    // Méthode pour enregistrer une nouvelle vache dans la base de données
+    public function store(Request $request)
+    {
+        // Validation des données
+        $validated = $request->validate([
+            'nom' => 'required|string|max:255', // Validation du nom
+            'numero_collier' => 'required|string|max:50', // Validation du numéro de collier (doit être une chaîne)
+            'numero_oreille' => 'required|string|max:50', // Validation du numéro d'oreille (doit être une chaîne)
+            'date_naissance' => 'required|date|before_or_equal:today', // Validation de la date de naissance (doit être une date valide et pas dans le futur)
+            'num_tblRace' => 'required|exists:tbl_races,num_tblRace', // Validation de la race (doit exister dans la table des races)
+        ], [
+            // Personnalisation des messages d'erreur (facultatif)
+            'numero_collier.string' => 'Le numéro de collier doit être une chaîne valide.',
+            'numero_collier.max' => 'Le numéro de collier ne peut pas dépasser 50 caractères.',
+            'numero_oreille.string' => 'Le numéro d\'oreille doit être une chaîne valide.',
+            'numero_oreille.max' => 'Le numéro d\'oreille ne peut pas dépasser 50 caractères.',
+            'date_naissance.date' => 'La date de naissance doit être une date valide.',
+            'date_naissance.before_or_equal' => 'La date de naissance ne peut pas être dans le futur.',
+        ]);
+
+        // Créer la nouvelle vache
+        $cow = Cow::create($validated);
+
+        // Ajouter la relation avec la race
+        $cow->races()->attach($request->input('num_tblRace'));
+
+        // Rediriger vers la liste des vaches avec un message de succès
+        return redirect()->route('cows.get')->with('success', 'Vache ajoutée avec succès !');
+    }
+    public function average($idVache)
+    {
+        // Récupérer les logs de la vache triés par date
+        $vache = Cow::with(['logs' => function ($query) {
+            $query->orderBy('date', 'asc');
+        }])->findOrFail($idVache);
+
+        $dates = $vache->logs->where('insemination', false)->pluck('date');
+
+        // Si moins de deux dates, retourner 20 jours par défaut
+        if (count($dates) < 2) {
+            $average = 21.0;
+        } else {
+            $intervals = [];
+            for ($i = 1; $i < count($dates); $i++) {
+                $intervals[] = Carbon::parse($dates[$i])->diffInDays(Carbon::parse($dates[$i - 1]));
+            }
+
+            // Calculer la average
+            $average = array_sum($intervals) / count($intervals);
+        }
+
+        return view('cows.readcows', [
+            'cow' => $vache, 
+            'average' => round($average, 2) // Arrondi à 2 décimales
+        ]);
+    }
+    public function calendar()
+    {
+        $cows = Cow::with(['logs' => function ($query) {
+            $query->orderBy('date', 'desc');
+        }])->get();
+
+        return view('layouts.calendar', compact('cows'));
+    }
+    public function health(Request $request)
+    {
+        $races = Race::all();
+        
+        $cowsQuery = Cow::with('races'); // Charger la relation races
+    
+        // Appliquer le filtre si une race est sélectionnée
+        if ($request->has('race') && $request->race != '') {
+            $cowsQuery->whereHas('races', function ($query) use ($request) {
+                $query->where('num_tblRace', $request->race);
+            });
+        }
+    
+        $cows = $cowsQuery->get(); // Récupérer les vaches après le filtrage
+    
+        return view('layouts.health', compact('cows', 'races'));
+    }
+
+}
+
+
+
+Pour modifier ces données j'utilise du javascript :
+
+document.addEventListener('DOMContentLoaded', function() {
+   
+    let lactationButtons = document.querySelectorAll('.lactation-btn');
+    let chaleurButtons = document.querySelectorAll('.chaleur-btn');
+
+    let confirmButton = document.getElementById('dialog-confirm');
+    let cancelButton = document.getElementById('dialog-cancel');
+    let dialogTitle = document.getElementById('dialog-title');
+    let customDialog = document.getElementById('custom-dialog');
+    let dialogMessage = document.getElementById('dialog-message');
+    
+    let hamMenu = document.querySelector('.ham-menu');
+    let offScreenMenu = document.querySelector('.off-screen-menu');
+    let overlay = document.querySelector(".menu-overlay");    
+    let deleteUrl = '';
+
+    if (hamMenu && offScreenMenu && overlay) {
+        hamMenu.addEventListener('click', function() {
+            hamMenu.classList.toggle('active');
+            offScreenMenu.classList.toggle('active');
+            overlay.classList.toggle("active");
+        });
+
+        overlay.addEventListener("click", () => {
+            hamMenu.classList.remove("active");
+            offScreenMenu.classList.remove("active");
+            overlay.classList.remove("active");
+        });
+    }
+
+    if (confirmButton) {
+        confirmButton.addEventListener('click', function() {
+            if (typeof deleteForm !== "undefined" && deleteForm) {
+                deleteForm.submit();
+            }
+        });
+    }
+
+    if (cancelButton && customDialog) {
+        cancelButton.addEventListener('click', function() {
+            customDialog.style.display = 'none';
+        });
+    }
+
+    if (cancelButton) {
+        cancelButton.addEventListener('click', function(event) {
+            let form = document.querySelector('form');
+            if (!form) return;
+
+            let inputs = form.querySelectorAll('input, select');
+            let isDirty = false;
+
+            inputs.forEach(function(input) {
+                if (input.tagName === 'SELECT') {
+                    if (input.value !== input.getAttribute('data-default')) {
+                        isDirty = true;
+                    }
+                } else {
+                    if (input.value !== input.defaultValue) {
+                        isDirty = true;
+                    }
+                }
+            });
+
+            if (isDirty) {
+                event.preventDefault();
+                customDialog.style.display = 'flex';
+                dialogTitle.textContent = "Attention";
+                dialogMessage.textContent = "Vos changements ne seront pas enregistrés. Voulez-vous vraiment quitter ?";
+            } else {
+                window.location.href = cancelButton.href;
+            }
+        });
+    }
+
+    let selects = document.querySelectorAll('select');
+    selects.forEach(function(select) {
+        select.setAttribute('data-default', select.value);
+    });
+
+    lactationButtons.forEach(button => {
+        button.addEventListener('click', function (event) {
+            const cowLactation = event.target.getAttribute('data-cow-lactation');
+            const cowName = event.target.closest('li').getAttribute('data-cow-name');
+
+            dialogMessage.textContent = `Voulez-vous ajouter une lactation à ${cowName} ? `;
+            dialogMessage.textContent += `\nNombre de lactations actuel : ${cowLactation}`;
+
+            customDialog.style.display = 'flex';
+        });
+    });
+    cancelButton.addEventListener('click', function() {
+        customDialog.style.display = 'none';
+    });
+
+    chaleurButtons.forEach(button => {
+        button.addEventListener('click', function (event) {
+            const cowName = event.target.closest('li').getAttribute('data-cow-name');
+
+            dialogMessage.textContent = `${cowName} est en chaleur ? `;
+
+            customDialog.style.display = 'flex';
+        });
+    });
+    cancelButton.addEventListener('click', function() {
+        customDialog.style.display = 'none';
+    });
+
+
+    document.body.addEventListener('click', function (event) {
+        if (event.target && event.target.matches('.delete-btn')) {
+            event.preventDefault(); // Empêcher la redirection immédiate
+
+            const cowName = event.target.getAttribute('data-cow-name');
+            deleteUrl = event.target.getAttribute('data-delete-href');
+
+            if (!deleteUrl) {
+                console.error("URL de suppression manquante.");
+                return;
+            }
+
+            dialogMessage.textContent = `Voulez-vous vraiment supprimer ${cowName} ?`;
+            customDialog.style.display = 'flex';
+        }
+    });
+    confirmButton.addEventListener('click', function () {
+        if (!deleteUrl) return;
+
+        // Création d'un formulaire pour envoyer la requête DELETE
+        const form = document.createElement('form');
+        form.method = 'POST';
+        form.action = deleteUrl;
+
+        const csrfToken = document.createElement('input');
+        csrfToken.type = 'hidden';
+        csrfToken.name = '_token';
+        csrfToken.value = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+
+        const methodInput = document.createElement('input');
+        methodInput.type = 'hidden';
+        methodInput.name = '_method';
+        methodInput.value = 'DELETE';
+
+        form.appendChild(csrfToken);
+        form.appendChild(methodInput);
+
+        document.body.appendChild(form);
+        form.submit();
+    });
+});
+
+
+
+
+Le problème c'est qu'il manque le code nécessaire pour incrémenter le nombre de lactation après avoir confirmé le dialogue suivant :
+@extends('layouts.app')
+<head>
+    <link rel="stylesheet" href="{{ asset('css/healthcows.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/dialog.css') }}">
+</head>
+@section('head')
+@endsection
+<body>
+    <header>
+        <div class = "title">
+            Événements sanitaires
+        </div>
+    </header>
+@section('content')
+        <ul>
+            @if($cows->isEmpty())
+                <p>Aucune vache trouvée.</p>
+            @endif
+            @foreach($cows as $cow)
+                <li id="cow-li"
+                    data-cow-id="{{ $cow->num_tblVache}}"
+                    data-cow-name="{{ $cow->nom }}"
+                    data-cow-lactation="{{ $cow->nombre_lactation }}">
+                    <div id="enhancedText"><span><p>{{ $cow->nom }}</p></span></div>
+                    <!-- <div><span>Collier : {{ $cow->numero_collier }}</span></div>
+                    <div><span>Numéro : {{ $cow->numero_oreille }}</span></div> -->
+                    <div class="cow-buttons">
+                        <button id ="lactation-btn" class="lactation-btn" data-cow-id="{{ $cow->num_tblVache }}" data-cow-lactation="{{ $cow->nombre_lactation }}">Lactation</button>
+                        <button id ="chaleur-btn" class="chaleur-btn">Chaleur</button>
+                    </div>
+                </li>
+            @endforeach
+        </ul>
+        <div id="custom-dialog" class="dialog-overlay" style="display: none;">
+        <div class="dialog-box">
+            <h3 id="dialog-title">Confirmation</h3>
+            <p id="dialog-message"></p>
+            <div class="dialog-buttons">
+                <button id="dialog-confirm">Oui</button>
+                <button id="dialog-cancel">Non</button>
+            </div>
+        </div>
+    </div>
+ @endsection
+
+
+
+
+Peux-tu ajouter le code nécessaire pour incrémenter le nombre de lactation d'une vache.
