@@ -1,12 +1,14 @@
 USE bd_moocycle;
-INSERT INTO tbl_vaches (nom, numero_collier, numero_oreille, date_prochaine_chaleur, date_derniere_chaleur, date_insemination, date_naissance, nombre_lactation)
+
+INSERT INTO tbl_vaches (nom, numero_collier, numero_oreille, date_prochaine_chaleur, date_insemination, date_naissance, nombre_lactation)
 VALUES 
-('Valeriane', 31, '120.1576.5091.9', '0000-00-00', '2025-01-12', '0000-00-00', '2020-11-29', 2),
-('Doudoune', 42, '120.1097.6625.5', '0000-00-00', '2024-02-12', '0000-00-00', '2013-11-14', 9),
-('Fionna', 25, '120.1576.5069.8', '0000-00-00', '2025-03-12', '0000-00-00', '2020-09-12', 2),
-('Carotte', 72, '120.1220.5544.2', '0000-00-00', '2025-04-12', '0000-00-00', '2015-12-17', 7),
-('Doreen', 88, '120.1495.4401.1', '0000-00-00', '2025-05-12', '0000-00-00', '2015-12-17', 7),
-('Valomer', 57, '120.1220.5563.3', '0000-00-00', '2025-06-12', '0000-00-00', '2016-04-21', 6);
+('Valeriane', 31, '120157650919', NULL, NULL, '2020-05-12', 2),
+('Doudoune', 42, '120109766255', NULL, NULL, '2015-08-23', 9),
+('Fionna', 25, '120157650698', NULL, NULL, '2020-11-30', 2),
+('Carotte', 72, '120122055442', NULL, NULL, '2016-04-15', 7),
+('Doreen', 88, '120149544011', NULL, NULL, '2016-09-05', 7),
+('Valomer', 57, '120122055633', NULL, NULL, '2017-03-19', 6);
+
 
 
 INSERT INTO tbl_races (nom)
@@ -59,4 +61,6 @@ VALUES
 ('2025-04-05', false, 4),
 ('2025-05-12', false, 5),
 ('2025-06-18', false, 6),
-('2025-02-02', false, 1);
+('2025-02-02', false, 1),
+('2025-03-10', false, 2),
+('2025-03-31', false, 2);

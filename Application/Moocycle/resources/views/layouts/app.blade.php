@@ -15,6 +15,7 @@
 </head>
 <body>
     <header>
+    <a href="{{ route('login') }}">Login</a>
         <div id = "clock"></div>
         <nav>
             <div class="ham-menu">

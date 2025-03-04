@@ -7,6 +7,8 @@ use App\Models\Race;
 use App\Models\Logs;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 
 class CowController extends Controller
 {
@@ -55,53 +57,92 @@ class CowController extends Controller
         return redirect()->route('cows.get')->with('success', 'Vache mise à jour avec succès.');
     }
 
-    // Méthode pour récupérer les vaches avec un filtre ou non
     public function get(Request $request)
     {
         $races = Race::all();
-        
-        $cowsQuery = Cow::with('races'); // Charger la relation races
     
+        $cowsQuery = Cow::with('races'); // Charger la relation races
+        
         // Appliquer le filtre si une race est sélectionnée
         if ($request->has('race') && $request->race != '') {
             $cowsQuery->whereHas('races', function ($query) use ($request) {
                 $query->where('num_tblRace', $request->race);
             });
         }
-    
+        
+        // Filtrer les vaches par ID de l'utilisateur
+        $userId = auth()->user()->id; // Assurez-vous que l'utilisateur est authentifié
+        $cowsQuery->where('num_tblUser', $userId); // Ajouter la condition pour l'ID de l'utilisateur
+        
         $cows = $cowsQuery->get(); // Récupérer les vaches après le filtrage
-    
         return view('cows.cows', compact('cows', 'races'));
     }
     
+    
     public function show($id)
     {
+        // Récupérer la vache avec ses logs triés par date
         $cow = Cow::with(['logs' => function ($query) {
             $query->orderBy('date', 'asc');
         }])->findOrFail($id);
-
+    
+        // Récupérer les dates de chaleurs, excluant celles où l'insémination a été effectuée
         $dates = $cow->logs->where('insemination', false)->pluck('date');
-
+    
         // Si moins de deux dates, retourner 20 jours par défaut
         if (count($dates) < 2) {
-            $average = 21.0 *-1;
+            $average = 21.0;
         } else {
             $intervals = [];
             for ($i = 1; $i < count($dates); $i++) {
                 $intervals[] = Carbon::parse($dates[$i])->diffInDays(Carbon::parse($dates[$i - 1]));
             }
-
-            // Calculer la moyenne
-            $average = array_sum($intervals) / count($intervals);
+    
+            // Calculer la moyenne des intervalles
+            $average = array_sum($intervals) / count($intervals) *-1;
         }
+    
+        // Ajouter la moyenne à la dernière date de chaleur pour obtenir la prochaine chaleur
+        if(Carbon::parse($dates->last()) == null){
+            $lastHeatDate = null;
+        }
+        else{
+            $lastHeatDate = Carbon::parse($dates->last());
+        }
+        
+        $nextHeatDate = $lastHeatDate->copy()->addDays($average);
+    
+        // Mettre à jour les dates dans le modèle
+        $cow->date_prochaine_chaleur = $nextHeatDate->format('Y-m-d');
+        $cow->save();
+    
+        // Récupérer la première race associée à la vache
+        $currentRace = $cow->races->first();
+        $birth = $cow->date_naissance ? Carbon::parse($cow->date_naissance)->format('d.m.Y') : null;
+        $lastHeatDateFormatted = $lastHeatDate ? $lastHeatDate->format('d.m.Y') : null;
+        $nextHeatDateFormatted = $nextHeatDate->format('d.m.Y');
 
-        $currentRace = $cow->races->first(); // Récupérer la première race associée
-
+        // Retourner la vue avec toutes les informations nécessaires
         return view('cows.readcows', [
-            'cow' => $cow,
+            'cow' => $cow, 
             'currentRace' => $currentRace,
-            'average' => round($average *-1, 2) // Arrondi à 2 décimales
+            'birth' => $birth,
+            'average' => round($average, 0), // Arrondi à 0 décimales
+            'lastHeatDate' => $lastHeatDateFormatted, // Format de la date de la dernière chaleur
+            'nextHeatDate' => $nextHeatDateFormatted // Format de la date de la prochaine chaleur
         ]);
+    }
+    public function addLatestDate($id)
+    {
+        \Log::info("Requête reçue pour ajouter une date pour la vache ID: " . $id);
+
+        $log = new Log();
+        $log->date = now();
+        $log->insemination = false;
+        $log->num_tblVache = $id;
+        $log->save();
+
+        return response()->json(['success' => true]);
     }
 
     public function incrementLactation($id)
@@ -144,6 +185,14 @@ class CowController extends Controller
             'date_naissance.before_or_equal' => 'La date de naissance ne peut pas être dans le futur.',
         ]);
 
+        if (Auth::check()) {
+            $cow = new Cow($validated);
+            $cow->num_tblUser = Auth::id();
+            $cow->save();
+
+            return redirect()->route('cows.get')->with('success', 'Vache ajoutée avec succès !');
+        }
+
         // Créer la nouvelle vache
         $cow = Cow::create($validated);
 
@@ -152,44 +201,6 @@ class CowController extends Controller
 
         // Rediriger vers la liste des vaches avec un message de succès
         return redirect()->route('cows.get')->with('success', 'Vache ajoutée avec succès !');
-    }
-    public function average($idVache)
-    {
-        // Récupérer les logs de la vache triés par date
-        $cow = Cow::with(['logs' => function ($query) {
-            $query->orderBy('date', 'asc');
-        }])->findOrFail($idVache);
-
-        // Récupérer toutes les dates de chaleurs, excluant celles où l'insémination a été effectuée
-        $dates = $cow->logs->where('insemination', false)->pluck('date');
-
-        // Si moins de deux dates, retourner 20 jours par défaut
-        if (count($dates) < 2) {
-            $average = 21.0;
-        } else {
-            $intervals = [];
-            for ($i = 1; $i < count($dates); $i++) {
-                $intervals[] = Carbon::parse($dates[$i])->diffInDays(Carbon::parse($dates[$i - 1]));
-            }
-
-            // Calculer la moyenne des intervalles
-            $average = array_sum($intervals) / count($intervals);
-        }
-
-        // Ajouter la moyenne à la dernière date de chaleur pour obtenir la prochaine chaleur
-        $lastHeatDate = Carbon::parse($dates->last());
-        $nextHeatDate = $lastHeatDate->addDays($average);
-
-        // Mettre à jour les dates dans le modèle
-        $cow->date_derniere_chaleur = $lastHeatDate->format('Y-m-d');
-        $cow->date_prochaine_chaleur = $nextHeatDate->format('Y-m-d');
-        $cow->save();
-
-        return view('cows.readcows', [
-            'cow' => $cow, 
-            'average' => round($average, 2), // Arrondi à 2 décimales
-            'nextHeatDate' => $nextHeatDate->format('Y-m-d') // Format de la date de la prochaine chaleur
-        ]);
     }
 
     public function calendar()
@@ -217,5 +228,6 @@ class CowController extends Controller
     
         return view('layouts.health', compact('cows', 'races'));
     }
+
 
 }

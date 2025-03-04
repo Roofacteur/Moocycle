@@ -23,14 +23,16 @@
         </p>
         </span>
     </div>
-    <div><span>Naissance<p class = "cow-data">{{ $cow->date_naissance }}</p></span></div>
+    <div><span>Naissance<p class = "cow-data">{{ $birth }}</p></span></div>
     <div><span>Collier<p class = "cow-data">{{ $cow->numero_collier }}</p></span></div>
     <div><span>Numéro d'oreille<p class = "cow-data">{{ $cow->numero_oreille }}</p></span></div>
     <div><span>Nombre de lactation<p class = "cow-data">{{ $cow->nombre_lactation }}</p></span></div>
     <div class="date-chaleurs">
-        <div><span>Date prochaine chaleur<p class = "cow-data">{{ $cow->date_prochaine_chaleur }}</p></span></div>
+        <div><span>Date dernière chaleur<p class="cow-data">{{ $lastHeatDate }}</p></span></div>
+        <div><span>Date prochaine chaleur<p class="cow-data">{{ $nextHeatDate }}</p></span></div>
+        
         <div class="average-cycle">
-            <div><span>Moyenne (jours) entre les chaleurs<p class = "cow-data">{{ $average }} jours</p></span></div>
+            <div><span>Moyenne (jours) entre les chaleurs<p class="cow-data">{{ $average }} jours</p></span></div>
         </div>
     </div>
     

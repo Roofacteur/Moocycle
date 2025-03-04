@@ -26,24 +26,35 @@
                     data-cow-lactation="{{ $cow->nombre_lactation }}">
                     <div id="enhancedText"><span><p>{{ $cow->nom }}</p></span></div>
                     <div><span>Lactations : {{ $cow->nombre_lactation}}</span></div>
-                    <div><span>Chaleur prévue : {{ $cow->date_prochaine_chaleur}}</span></div>
+                    @if($cow->date_prochaine_chaleur === null)
+                        <div><span>Chaleur prévue : Aucune </span></div>
+                    @else
+                        <div><span>Chaleur prévue : {{ \Carbon\Carbon::parse($cow->date_prochaine_chaleur)->format('d.m.Y') }}</span></div>
+                    @endif
                     <div class="cow-buttons">
-                        <button id ="lactation-btn" class="lactation-btn" data-cow-id="{{ $cow->num_tblVache }}" data-cow-lactation="{{ $cow->nombre_lactation }}">Lactation</button>
-                        <button id ="chaleur-btn" class="chaleur-btn">Chaleur</button>
+                        <button id ="lactation-btn" class="lactation-btn" 
+                        data-cow-id="{{ $cow->num_tblVache }}" 
+                        data-cow-lactation="{{ $cow->nombre_lactation }}"
+                        data-action="increment-lactation">Lactation</button>
+                        
+                        <button id ="chaleur-btn" class="chaleur-btn" 
+                        data-cow-id="{{ $cow->num_tblVache }}" 
+                        data-action="add-latest-date">Chaleur</button>
+                        <button id ="insemination-btn" class="insemination-btn">Insemination</button>
                     </div>
                 </li>
             @endforeach
         </ul>
         <div id="custom-dialog" class="dialog-overlay" style="display: none;">
-        <div class="dialog-box">
-            <h3 id="dialog-title">Confirmation</h3>
-            <p id="dialog-message"></p>
-            <div class="dialog-buttons">
-                <button id="dialog-confirm">Oui</button>
-                <button id="dialog-cancel">Non</button>
+            <div class="dialog-box">
+                <h3 id="dialog-title">Confirmation</h3>
+                <p id="dialog-message"></p>
+                <div class="dialog-buttons">
+                    <button id="dialog-confirm">Oui</button>
+                    <button id="dialog-cancel">Non</button>
+                </div>
             </div>
         </div>
-    </div>
  @endsection
 
 

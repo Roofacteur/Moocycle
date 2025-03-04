@@ -43,6 +43,8 @@ Route::get('/calendar', [CowController::class, 'calendar'])->name('calendar');
 Route::get('/health', [CowController::class, 'health'])->name('health');
 
 Route::post('/health/{num_tblVache}/increment-lactation', [CowController::class, 'incrementLactation'])->name('incrementLactation');
+Route::post('/health/{num_tblVache}/add-latest-date', [CowController::class, 'addLatestDate']);
+
 
 Route::get('/tips', function () {
     return view('layouts.tips');
@@ -58,5 +60,7 @@ Route::middleware('auth')->group(function () {
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
+
+
 
 require __DIR__.'/auth.php';

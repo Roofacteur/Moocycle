@@ -151,6 +151,20 @@ body {
     cursor: pointer; /* Change le curseur pour indiquer un bouton cliquable */
     transition: background-color 0.3s ease; /* Transition pour un effet au survol */
 }
+.insemination-btn {
+    background: linear-gradient(135deg, #ffc0f1, #ff5fdc);
+    color: white; /* Couleur du texte */
+    font-size: 14px; /* Taille de la police */
+    padding: 8px 16px; /* Espacement interne */
+    border: none; /* Retire la bordure par défaut */
+    border-radius: 5px; /* Coins arrondis */
+    cursor: pointer; /* Change le curseur pour indiquer un bouton cliquable */
+    transition: background-color 0.3s ease; /* Transition pour un effet au survol */
+}
+.insemination-btn:hover{
+    transition: 0.3s;
+    box-shadow: 0 10px 30px rgba(255, 0, 242, 0.493); /* Ombre plus marquée au survol */
+}
 .lactation-btn:hover{
     transition: 0.3s;
     box-shadow: 0 10px 30px rgba(255, 255, 255, 0.863); /* Ombre plus marquée au survol */
@@ -160,7 +174,7 @@ body {
     box-shadow: 0 10px 30px rgba(255, 55, 0, 0.518); /* Ombre plus marquée au survol */
 }
 
-.lactation-btn:focus, #chaleur-btn:focus {
+.lactation-btn:focus, #chaleur-btn:focus, #insemination-btn:focus {
     outline: none; /* Retire la bordure par défaut quand le bouton est focus */
 }
 /* Pour les écrans petits et tablettes */

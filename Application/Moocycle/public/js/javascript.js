@@ -7,7 +7,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const dialogTitle = document.getElementById('dialog-title');
     const customDialog = document.getElementById('custom-dialog');
     const dialogMessage = document.getElementById('dialog-message');
-    let selectedCowId = null;
+    let selectedCowId;
     let deleteUrl = '';
 
     if (hamMenu && offScreenMenu && overlay) {
@@ -32,14 +32,18 @@ document.addEventListener('DOMContentLoaded', function() {
             const cowName = target.closest('li').dataset.cowName;
             const cowLactation = target.dataset.cowLactation;
             dialogMessage.textContent = `Voulez-vous ajouter une lactation à ${cowName} ? Nombre de lactations actuel : ${cowLactation}`;
+            confirmButton.dataset.action = 'increment-lactation';
             customDialog.style.display = 'flex';
         }
 
         if (target.matches('.chaleur-btn')) {
+            selectedCowId = target.dataset.cowId;
             const cowName = target.closest('li').dataset.cowName;
             dialogMessage.textContent = `${cowName} est en chaleur ?`;
+            confirmButton.dataset.action = 'add-latest-date';
             customDialog.style.display = 'flex';
         }
+        
 
         if (target.matches('.delete-btn')) {
             event.preventDefault();
@@ -51,8 +55,34 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
 
+    document.getElementById('btn-chaleur')?.addEventListener('click', function() {
+        confirmButton.dataset.action = 'add-latest-date';
+        customDialog.style.display = 'block';
+    });
+
     confirmButton?.addEventListener('click', function() {
-        if (selectedCowId) {
+        if (selectedCowId && confirmButton.dataset.action === 'add-latest-date') {
+            fetch(`/health/${selectedCowId}/add-latest-date`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content
+                },
+                body: JSON.stringify({})
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) location.reload();
+                else alert("Une erreur est survenue.");
+            })
+            .catch(error => {
+                console.error('Erreur de la requête:', error);
+                alert("Une erreur est survenue.");
+            });
+            
+            customDialog.style.display = 'none';
+        } 
+        else if (selectedCowId && confirmButton.dataset.action === 'increment-lactation') {
             fetch(`/health/${selectedCowId}/increment-lactation`, {
                 method: 'POST',
                 headers: {
@@ -79,6 +109,7 @@ document.addEventListener('DOMContentLoaded', function() {
             form.submit();
         }
     });
+    
 
     cancelButton?.addEventListener('click', function(event) {
         const form = document.querySelector('form');
