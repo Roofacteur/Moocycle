@@ -21,7 +21,6 @@ return new class extends Migration
             $table->date('date_naissance'); // Champ DATE non nul
             $table->integer('nombre_lactation')->nullable(); // Champ INT, nullable
             $table->foreignId('num_tblUser')->constrained('users')->onDelete('cascade');
-
         });
     }
 

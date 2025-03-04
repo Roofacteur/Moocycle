@@ -3,7 +3,7 @@
     <link rel="stylesheet" href="{{ asset('css/home.css') }}">
 @endsection
 @section('title', 'Login')
-@section('content') <!-- Assurez-vous d'utiliser la section 'content' ici -->
+@section('content')
     <x-guest-layout>
         <!-- Session Status -->
         <x-auth-session-status class="mb-4" :status="session('status')" />

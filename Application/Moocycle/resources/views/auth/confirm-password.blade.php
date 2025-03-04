@@ -1,3 +1,9 @@
+@extends('layouts.app')
+@section('head')
+    <link rel="stylesheet" href="{{ asset('css/home.css') }}">
+@endsection
+@section('title', 'Login')
+@section('content')
 <x-guest-layout>
     <div class="mb-4 text-sm text-gray-600 dark:text-gray-400">
         {{ __('This is a secure area of the application. Please confirm your password before continuing.') }}

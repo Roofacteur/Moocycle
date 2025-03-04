@@ -1,0 +1,152 @@
+/* Importation de la police */
+@font-face {
+    font-family: 'Dolphin-Sans';
+    src: url('/fonts/AlteHaasGroteskBold.ttf'); /* Référence la police dans le dossier public */
+}
+
+/* Animation subtile */
+@keyframes slideIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Styles pour le corps */
+body {
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    font-family: Arial, sans-serif;
+    text-align: center;
+    background-color: rgb(255, 255, 255);
+    animation: slideIn 0.6s ease-in-out;
+}
+
+/* Conteneur principal */
+.container {
+    margin: 30px auto;
+    width: 80%;
+    max-width: 900px;
+}
+
+/* Titre principal */
+h1 {
+    font-family: 'Dolphin-Sans';
+    color: blueviolet;
+    font-size: 32px;
+    margin-bottom: 20px;
+}
+
+/* Section des informations de l'utilisateur */
+.user-info {
+    background-color: #f0f0f0;
+    padding: 20px;
+    border-radius: 8px;
+    margin-bottom: 30px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    animation: slideIn 0.6s ease-in-out;
+}
+
+.user-info p {
+    font-size: 18px;
+    line-height: 1.6;
+    color: #333;
+}
+
+.user-info strong {
+    color: #6a5acd;
+}
+
+/* Style du bouton de déconnexion */
+form button {
+    width: 200px;
+    height: 50px;
+    background: linear-gradient(135deg, #6a5acd, #8a2be2);
+    color: white;
+    border: none;
+    border-radius: 25px;
+    font-size: 18px;
+    font-weight: bold;
+    text-align: center;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 20px;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease, background-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+form button:hover {
+    transform: scale(1.1);
+    background: linear-gradient(135deg, #8a2be2, #6a5acd);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+}
+
+/* Media Queries */
+
+/* Smartphones en portrait */
+@media (max-width: 600px) {
+    .container {
+        width: 90%;
+    }
+
+    h1 {
+        font-size: 28px;
+    }
+
+    .user-info p {
+        font-size: 16px;
+    }
+
+    form button {
+        width: 100%;
+        font-size: 16px;
+        padding: 10px;
+    }
+}
+
+/* Tablettes (portrait et paysage) */
+@media (min-width: 601px) and (max-width: 1024px) {
+    .container {
+        width: 80%;
+    }
+
+    h1 {
+        font-size: 30px;
+    }
+
+    .user-info p {
+        font-size: 17px;
+    }
+
+    form button {
+        font-size: 17px;
+    }
+}
+
+/* Ordinateurs de bureau (grand écran) */
+@media (min-width: 1025px) {
+    .container {
+        width: 70%;
+    }
+
+    h1 {
+        font-size: 32px;
+    }
+
+    .user-info p {
+        font-size: 18px;
+    }
+
+    form button {
+        font-size: 18px;
+    }
+}

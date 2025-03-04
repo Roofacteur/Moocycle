@@ -26,7 +26,7 @@ class Cow extends Model
         'nombre_lactation',
     ];
 
-    // Si tu veux ajouter des dates à l'attribut $dates (par exemple, pour le formatage)
+
     protected $dates = [
         'date_prochaine_chaleur',
         'date_insemination',

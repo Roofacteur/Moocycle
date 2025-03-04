@@ -50,7 +50,7 @@
             <select name="num_tblRace" id="num_tblRace" required>
                 <option value="" disabled selected>Sélectionner une race</option>
                 @foreach ($races as $race)
-                    <option value="{{ $race->num_tblRace }}" {{ old('num_tblRace') == $race->num_tblRace ? 'selected' : '' }}>{{ $race->nom }}</option>
+                    <option value="{{ $race->num_tblRace }}" {{ old('num_tblRace') == $race->num_tblRace ? 'selected' : '' }} >{{ $race->nom }}</option>
                 @endforeach
             </select>
             @error('num_tblRace')

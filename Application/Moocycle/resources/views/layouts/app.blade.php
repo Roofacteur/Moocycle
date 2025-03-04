@@ -15,7 +15,6 @@
 </head>
 <body>
     <header>
-    <a href="{{ route('login') }}">Login</a>
         <div id = "clock"></div>
         <nav>
             <div class="ham-menu">
@@ -26,7 +25,12 @@
             <div class="off-screen-menu">
                 <ul>
                     <li><a href="http://moocycle.test">Accueil</a></li>
-                    <li><a href="#">Compte</a></li>
+                    @if(Auth::check())
+                        <li><a href="{{ route('profile') }}">Compte</a></li>
+                    @else
+                        <li><a href="{{ route('login') }}">Se connecter</a></li>
+                    @endif
+
                     <li><a href="#">Langues</a></li>
                     <li><a href="#">Paramètres</a></li>
                     <li><a href="#">Aide</a></li>
