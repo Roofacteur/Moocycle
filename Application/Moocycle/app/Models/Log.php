@@ -11,6 +11,8 @@ class Log extends Model
 
     protected $table = 'tbl_logs'; // Nom de la table
     protected $primaryKey = 'num_tblLog'; // Clé primaire
+    protected $fillable = ['date', 'insemination', 'num_tblVache'];
+    public $timestamps = false;
 
     public function vache()
     {

@@ -8,7 +8,7 @@
 <body>
     <header>
         <div class = "title">
-            Événements sanitaires
+            Santé
         </div>
     </header>
 @section('content')
@@ -27,9 +27,9 @@
                     <div id="enhancedText"><span><p>{{ $cow->nom }}</p></span></div>
                     <div><span>Lactations : {{ $cow->nombre_lactation}}</span></div>
                     @if($cow->date_prochaine_chaleur === null)
-                        <div><span>Chaleur prévue : Aucune </span></div>
+                        <div><span>Prochaine chaleur : Aucune </span></div>
                     @else
-                        <div><span>Chaleur prévue : {{ \Carbon\Carbon::parse($cow->date_prochaine_chaleur)->format('d.m.Y') }}</span></div>
+                        <div><span>Prochaine chaleur : {{ \Carbon\Carbon::parse($cow->date_prochaine_chaleur)->format('d.m.Y') }}</span></div>
                     @endif
                     <div class="cow-buttons">
                         <button id ="lactation-btn" class="lactation-btn" 

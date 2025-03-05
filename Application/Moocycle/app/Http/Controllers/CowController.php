@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Cow;
 use App\Models\Race;
-use App\Models\Logs;
+use App\Models\Log;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -144,7 +144,7 @@ class CowController extends Controller
         $log->insemination = false;
         $log->num_tblVache = $id;
         $log->save();
-
+        $this-> show($id);
         return response()->json(['success' => true]);
     }
 

@@ -39,7 +39,7 @@ Route::middleware('auth')->group(function() {
     // Route pour afficher les vaches et le bouton de chaleur
     Route::get('/health', [CowController::class, 'health'])->name('health');
     Route::post('/health/{num_tblVache}/increment-lactation', [CowController::class, 'incrementLactation'])->name('incrementLactation');
-    Route::post('/health/{num_tblVache}/add-latest-date', [CowController::class, 'addLatestDate']);
+    Route::post('/health/{num_tblVache}/add-latest-date', [CowController::class, 'addLatestDate'])->name('addLatestDate');
     Route::get('/tips', function () {
         return view('layouts.tips');
     })->name('tips');
